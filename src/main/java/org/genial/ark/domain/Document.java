@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.stream.IntStream;
 
@@ -19,6 +20,8 @@ public class Document {
 
     public static final String BEGIN_EXO = "\\begin{exo}";
     public static final String END_EXO = "\\end{exo}";
+    public static final String COMMENT = "%";
+    public static final String FIXED = "fixed";
 
     private ArrayList<Exercice> exercices = new ArrayList<>();
 
@@ -31,6 +34,7 @@ public class Document {
         shuffle();
     }
 
+
     private int[] shuffle(){
         int[] exerciseOrder = IntStream.range(0, this.exercices.size()).toArray();
 
@@ -39,12 +43,14 @@ public class Document {
             int indexSwapB = (int)(Math.random() * exerciseOrder.length);
 
             // SWAPPING EXERCISES A INDEX A AND B
-            if(indexSwapA != indexSwapB){
+            // WE SWAP ONLY IF WE DREW TWO DIFFRENT INDEX AND IF NONE OF THEM SHOULD BE FIXED
+            if(indexSwapA != indexSwapB && !this.exercices.get(exerciseOrder[indexSwapA]).isFixed() && !this.exercices.get(exerciseOrder[indexSwapB]).isFixed()   ){
                 int tmp =  exerciseOrder[indexSwapA]; // TEMPORARILY SAVING EXERCISE A
                 exerciseOrder[indexSwapA] = exerciseOrder[indexSwapB]; // COPYING EXERCISE B INTO EXERCISE A
                 exerciseOrder[indexSwapB] = tmp; // COPYING EXERCISE A INTO EXERCISE B
             }
         }
+        System.out.println(Arrays.toString(exerciseOrder));
         return  exerciseOrder;
     }
 
@@ -59,6 +65,7 @@ public class Document {
             StringBuilder currentExerciceContent = new StringBuilder();
             int state = 0;
             int lineNum =0; // index of the line currently being read
+            boolean currentExerciseIsFixed = false; // true if exercise currently being parsed should be fixed
             /*
             state 0 : started parsing file, initial configuration before exercices
             state 1 : has seen a \begin{exo} line but no \end{exo} line yet
@@ -68,8 +75,9 @@ public class Document {
             {
                 String currentLine = sc.nextLine();
                 //BEGIN EXO
-                if(currentLine.equals(BEGIN_EXO)){
+                if(currentLine.startsWith(BEGIN_EXO)){
                     if(state == 2 || state == 0){
+                        currentExerciseIsFixed = currentLine.equals(BEGIN_EXO + COMMENT + FIXED); // REMEMBERING IF EXERCISE CURRENTLY BEING PARSED SHOULD BE FIXED OR NOT
                         state = 1; // CHANGING TO STATE 1 BECAUSE WE ARE INSIDE AN EXERCISE
                         currentExerciceContent.append(currentLine).append("\n");
                     } else{
@@ -83,7 +91,7 @@ public class Document {
                     if(state == 1){
                         state = 2; // CHANGING TO STATE 2 BECAUSE WE ARE NOT INSIDE AN EXERCISE BUT WE READ AT LEAT ONE
                         currentExerciceContent.append(currentLine).append("\n");
-                        Exercice exercice = new Exercice(currentExerciceContent.toString());
+                        Exercice exercice = new Exercice(currentExerciceContent.toString(), currentExerciseIsFixed);
                         this.exercices.add(exercice); // REGISTERING EXERCISE INSIDE THE DOCUMENT
                         currentExerciceContent = new StringBuilder(); // RESET FOR NEXT EXERCISE
                     } else {

@@ -3,7 +3,9 @@ package org.genial.ark.domain;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -25,13 +27,17 @@ public class Document {
 
     private ArrayList<Exercice> exercices = new ArrayList<>();
 
-    private String beforeExercicesContent;
 
-    private String afterExercicesContent;
+    private String beforeExercicesContent = "";
+
+    private String afterExercicesContent = "";
 
     public Document(String inputPath){
         parse(inputPath);
         shuffle();
+        int[] exerciseIndex = new int[this.exercices.size()];
+        for (int i = 0 ;  i < this.exercices.size() ; i ++)exerciseIndex[i]=i;
+        this.dumpToText(exerciseIndex);
     }
 
 
@@ -52,6 +58,25 @@ public class Document {
         }
         System.out.println(Arrays.toString(exerciseOrder));
         return  exerciseOrder;
+    }
+        private void dumpToText(int[]exercisesPermutation) {
+        String SAVEPATH = "./latex_exam_shuffler_dump.tex";
+        
+        if (exercisesPermutation.length != this.exercices.size()) {
+            logger.error("Size of permutation "+ exercisesPermutation.length+ " differs from number of exercises "+this.exercices.size());
+            return;
+        }
+        try(PrintWriter fd = new PrintWriter(SAVEPATH) ){
+            
+            fd.print(this.beforeExercicesContent);
+            for(int index : exercisesPermutation){
+                fd.print(this.exercices.get(index).getContent());}    
+            
+            fd.print(this.afterExercicesContent);
+        }catch (Exception e){
+            logger.error("Exception occurred when trying to dump to Text:"+e.toString());
+            e.printStackTrace();
+        }
     }
 
 

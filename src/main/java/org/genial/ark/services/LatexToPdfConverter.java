@@ -1,9 +1,7 @@
-package org.genial.ark.latextopdfconverter;
+package org.genial.ark.services;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.genial.ark.App;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,7 +11,7 @@ public class LatexToPdfConverter {
     /**
      * Logger.
      */
-    private static final Logger logger = LogManager.getLogger(App.class);
+    private static final Logger logger = LogManager.getLogger(org.genial.ark.services.LatexToPdfConverter.class);
 
     public void convert(String latexFilePath) {
         // Run pdflatex command to compile LaTeX file

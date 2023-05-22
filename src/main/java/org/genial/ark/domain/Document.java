@@ -34,9 +34,6 @@ public class Document {
     public Document(String inputPath){
         parse(inputPath);
         shuffle();
-        int[] exerciseIndex = new int[this.exercices.size()];
-        for (int i = 0 ;  i < this.exercices.size() ; i ++)exerciseIndex[i]=i;
-
     }
 
     public void generateVariations(String outputDirectory, int numberVariations){

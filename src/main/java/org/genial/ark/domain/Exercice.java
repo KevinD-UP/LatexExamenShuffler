@@ -4,10 +4,6 @@ public class Exercice {
 
     private String content;
 
-    public boolean isFixed() {
-        return fixed;
-    }
-
     private final boolean fixed;
 
     public Exercice(String content, Boolean fixed){
@@ -16,5 +12,9 @@ public class Exercice {
     }
 
     public String getContent(){return this.content;}
+
+    public boolean isFixed() {
+        return fixed;
+    }
 
 }

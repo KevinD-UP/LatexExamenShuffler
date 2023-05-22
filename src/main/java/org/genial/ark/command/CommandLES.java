@@ -23,8 +23,8 @@ public class CommandLES implements Runnable{
     @CommandLine.Parameters(description = "Path of the input .tex exam file")
     String inputPath;    // assigned index = "0"
 
-    @CommandLine.Parameters(description = "Number of desired variations to generate, default is 2")
-    int numberVariations;    // assigned index = "0"
+    @CommandLine.Parameters(description = "Number of desired variations to generate")
+    int numberVariations;    // assigned index = "1"
 
 
     /**
@@ -33,8 +33,6 @@ public class CommandLES implements Runnable{
     @CommandLine.Option(names = {"--output-dir"},
             description = "output directory, default is output/")
     private String outputDir = "output/";
-
-
 
 
     /**

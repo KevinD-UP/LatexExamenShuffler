@@ -21,6 +21,8 @@ public class Document {
 
     private ArrayList<Exercice> exercices = new ArrayList<>();
 
+
+
     private String beforeExercicesContent;
 
     private String afterExercicesContent;
@@ -28,6 +30,7 @@ public class Document {
     public Document(String inputPath){
         parse(inputPath);
     }
+
 
     private void parse(String inputPath) {
         logger.info("Parsing input file");

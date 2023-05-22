@@ -1,0 +1,157 @@
+
+\documentclass[a4paper,10pt,french]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{babel}
+\usepackage{pdfsync}
+
+\newcommand{\nterm}[1]{\textcolor{red}{#1}}
+\newcommand{\term}[1]{\textcolor{blue}{#1}}
+\newcommand{\bterm}[1]{\mathbin{\textcolor{blue}{#1}}}
+\newcommand{\LL}{\mathrm{LL}}
+\newcommand{\LR}{\mathrm{LR}}
+\newcommand{\follow}{\mathrm{FOLLOW}}
+\newcommand{\first}{\mathrm{FIRST}}
+\newcommand{\eps}{\mathrm{EPS}}
+\def\mybox#1#2{\fbox{\parbox[b][#1][b]{#2}{~}}}
+
+\newtheorem{exi}{}
+\newenvironment{exo}{\begin{exi}\em}{\end{exi}}
+
+\begin{document}
+\pagestyle{empty}
+\hrule
+\medbreak\medbreak
+\centerline{\textsf\large{\bf Grammaire et analyse: TD noté du vendredi 14 avril 2023}}
+\medbreak
+
+\noindent
+Les réponses seront données uniquement à l'intérieur des cadres.
+Dans tous les exercices qui suivent, les lettres majuscules sont les non-terminaux, les autres symboles sont les 
+terminaux.
+
+\begin{exo}
+
+  Soit la grammaire d'axiome~$S$ suivante:
+\begin{itemize}
+\item[] $S \rightarrow aSa \mid TU$
+\item[] $T \rightarrow bbT\mid b $
+\item[] $U \rightarrow cc\mid ccc $
+\end{itemize}
+
+
+\begin{enumerate}
+\item Donner une dérivation pour le mot $aabbbccaa$.
+  
+\mybox{2cm}{\linewidth}
+
+\item Parmi chacun des mots suivants, indiquer avec {\bf Oui} ou {\bf Non} s'il appartient au langage engendré par la grammaire.
+
+\begin{center}
+\begin{tabular}{|p{16mm}|p{16mm}|p{16mm}|p{16mm}|p{16mm}|p{16mm}|p{16mm}|}
+\hline
+\hfil $\varepsilon$	&\hfil $accca$	&\hfil $abcca$	&\hfil $aabcccaa$	&\hfil $abbbca$	&\hfil $aaabccaa$	&\hfil $bbbccc$ \\
+\hline
+%n&n&o&o&n&n&o\\
+&&&&&&\\
+\hline
+\end{tabular}
+\end{center}
+\item
+  Décrire le langage engendré par cette grammaire (par exemple, avec la notation $\{\ldots \mid \ldots \}$, comme pour $\{a^nb^n \mid n \geq 0\}$).
+  
+ \mybox{1.5cm}{\linewidth}
+
+ 
+\end{enumerate}
+
+ \end{exo}
+
+
+
+\begin{exo}
+
+  Soit la grammaire suivante où l'axiome est~$T$, l'ensemble des terminaux est $\{ a, c, (, )\}$ et l'ensemble des non-terminaux $\{T, U, V\}$:
+
+\begin{itemize}
+\item[] $T \rightarrow a(U)$
+\item[] $U \rightarrow VU\mid \varepsilon$
+\item[] $V \rightarrow c\mid T$
+\end{itemize}
+  \begin{enumerate}
+
+  \item
+    Donner l'ensemble $\eps$ des non-terminaux effaçables (annulables).
+   \mybox{1cm}{5cm}
+  
+  \item
+    Donner l'ensemble $\first_1$ de chacun des non-terminaux avec l'algorithme du cours. 
+
+    \begin{tabular}{|lp{1cm}p{3cm}p{3cm}p{3cm}|}
+      \hline
+      &&&&\\
+      Graphe && T &U &V\\
+      &&&&\\
+      Initialisation &&&&\\
+      &&&&\\
+     Propagation&&&&\\
+     &&&&\\
+      \hline
+    \end{tabular}
+
+    \vspace{0.5cm}
+
+  \item
+    Donner l'ensemble $\follow_1$ de chacun des non-terminaux avec l'algorithme du cours.
+
+    \begin{tabular}{|lp{1cm}p{3cm}p{3cm}p{3cm}|}
+      \hline
+      &&&&\\
+      Graphe && T &U &V\\
+      &&&&\\
+      Initialisation &&&&\\
+      &&&&\\
+      Propagation&&&&\\
+      &&&&\\
+     \hline
+    \end{tabular}
+
+    \vspace{0.5cm}
+
+  \item Est-ce que la grammaire est $\LL(1)$? Justifier.
+  
+  \mybox{5cm}{\linewidth}
+  \end{enumerate}
+  \end{exo}
+
+\begin{exo}
+On considère la grammaire d'axiome~$S$ suivante:
+\begin{itemize}
+\item[] $S \rightarrow T\$$
+\item[] $T \rightarrow aTb \mid Ud$
+\item[] $U \rightarrow a$
+\end{itemize}
+
+\begin{enumerate}
+\item Cette grammaire n'est pas $\LR(0)$. Donner le début de la construction
+de l'automate caractéristique qui le montre.
+
+\mybox{4cm}{\linewidth}
+
+\item Donner l'automate caractéristique déterministe $\LR(1)$ pour cette
+grammaire. Est-elle $\LR(1)$?
+
+\mybox{9cm}{\linewidth}
+
+\end{enumerate}
+
+\end{exo}
+
+\end{document}
+
+
+
+
+  
+  

@@ -1,0 +1,132 @@
+\documentclass[a4paper,10pt,french]{article}
+
+\usepackage{babel}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+
+% format standard, centré
+ \setlength{\oddsidemargin}{2mm}
+ \setlength{\evensidemargin}{2mm}
+ \setlength{\textwidth}{155mm}
+ \setlength{\textheight}{245mm}
+ \setlength{\topmargin}{0mm}
+% 1 mm entre chaque paragraphe
+ \setlength{\parskip}{1mm}
+
+\newtheorem{exi}{}
+\newenvironment{exo}{\begin{exi}\em}{\end{exi}}
+
+\newcommand{\lsem}{\llbracket}
+\newcommand{\rsem}{\rrbracket}
+
+\newcommand{\inte}[2]{\llbracket #1 \rsem {#2}}
+
+\begin{document}
+
+\vspace*{-1cm}
+\hrule
+\medbreak
+\centerline{\textsf{O{\small utils} et L{\small ogique} (OL4)}}
+\medbreak
+\hrule
+\medbreak
+\centerline{\textsf{\phantom{(} ~~~~~~~CC1~~~~~~~\phantom{)}}}
+\medbreak
+\hrule
+
+\bigskip
+\bigskip
+
+{\bf NOM:} \hspace*{4cm} {\bf PRENOM:} \hspace*{3cm} {\bf Numéro
+  d'étudiant:}\\
+
+Utilisez uniquement les espaces encadrées prévues pour répondre.
+
+\begin{exo}
+
+  On considère les affectations suivantes:$
+v_1 = [ x\mapsto 1] \quad
+v_2= [ x\mapsto 1, y\mapsto 1 ]  \quad
+v_3= [ y\mapsto 1, z\mapsto 1 ]$.
+Remplissez le tableau suivant ($0$ ou $1$ dans les trois premières colonnes et $vrai$ ou $\mathit{faux}$ dans le reste)~:
+
+\begin{tabular}{|c|c|c|c|c|c|c|}
+  \hline
+    Formule $p$ &$\inte{p}{v_1}$&$\inte{p}{v_2}$&$\inte{p}{v_3}$&$p$ valide ?&$p$ satisfaisable ?&$p$ contradictoire ?\\[0.5ex]
+    \hline
+    $((\neg x \vee y) \land x)$&&&&&&\\[0.5ex]
+    \hline
+    $(\neg y \land (z \land (x \land y)))$&&&&&&\\[0.5ex]
+    \hline
+    $((x \land z) \vee ((\neg x \land z) \vee \neg z))$&&&&&&\\[0.5ex]
+    \hline
+  \end{tabular}
+\end{exo}
+
+\begin{exo}
+  Formalisez les phrases suivantes en logique propositionnelle
+  (vous pouvez utiliser l'implication).
+  Indiquez pour chaque variable propositionnelle que vous utilisez
+  à quoi elle correspond.
+
+  \begin{enumerate}
+  \item Paris est belle.
+  \item Si Paris est belle, alors Berlin est belle.
+  \item Si Berlin n'est pas belle, alors ni Paris ni Rome sont belles.
+  \end{enumerate}
+\end{exo}
+
+ \framebox[\textwidth]{
+  \rule[-0.4cm]{0mm}{4cm}
+ }
+ 
+
+\begin{exo}
+  On considère l'affectation $v =  []$, qui associe à chaque variable la valeur
+  de vérité $0$.
+  Montrer par induction structurelle sur les formules que pour toute formule
+  $p$ qui ne contient pas $\neg$, on a $\inte{p}{v}=0$.
+  N.B.~: dans la preuve le cas $\neg p$ n'est pas considéré.
+  
+  \framebox[\textwidth]{
+    \rule[-0.4cm]{0mm}{8cm}
+}
+  
+\end{exo}
+
+\begin{exo}
+  On considère la fonction $taille(p)$ qui étant donnée une formule propositionnelle $p$
+  désigne sa taille (en nombre de n\oe{u}ds, y compris les feuilles) de
+  l'arbre syntaxique correspondant. Par exemple $taille((x \vee (\neg x \land y)))=6$ et
+  $taille(\neg x) = 2$.
+  
+  On considère également la fonction $hauteur(p)$ qui étant donnée une formule
+  propositionnelle $p$ désigne la hauteur de l'arbre syntaxique correspondant.
+  Par exemple, $hauteur(((\neg x \land y) \vee x))=4$ et
+  $hauteur((x\vee(\neg x \land y)))=4$ et
+  $hauteur(\neg x) = 2$.
+  Complétez les définitions récursives suivantes:
+  \begin{itemize}
+  \item $taille(x) = $ \framebox[1cm]{\rule[-0.2cm]{0mm}{0.5cm}},
+    $hauteur(x) = $ \framebox[1cm]{\rule[-0.2cm]{0mm}{0.5cm}}
+  \item $taille(\neg p) = $ \framebox[3cm]{\rule[-0.2cm]{0mm}{0.5cm}},
+    $hauteur(\neg p) = $ \framebox[3cm]{\rule[-0.2cm]{0mm}{0.5cm}}
+  \item $taille((p \land q)) = $ \framebox[4cm]{\rule[-0.2cm]{0mm}{0.5cm}},
+    $hauteur((p \land q)) = $ \framebox[4cm]{\rule[-0.2cm]{0mm}{0.5cm}}
+    \item $taille((p \vee q)) = $ \framebox[4cm]{\rule[-0.2cm]{0mm}{0.5cm}},
+        $hauteur((p \vee q)) = $ \framebox[4cm]{\rule[-0.2cm]{0mm}{0.5cm}}
+  \end{itemize}
+  
+  Montrez par induction structurelle que pour toute formule propositionnelle
+  $p$ on a $taille(p) \geq hauteur(p)$.\\[2ex]
+   \framebox[\textwidth]{
+    \rule[-0.4cm]{0mm}{13cm}
+   }
+\end{exo}
+
+\end{document}

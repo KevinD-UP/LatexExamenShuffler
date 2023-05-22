@@ -1,0 +1,152 @@
+\documentclass[a4paper,10pt,french]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{babel}
+\usepackage{pdfsync}
+
+\newcommand{\nterm}[1]{\textcolor{red}{#1}}
+\newcommand{\term}[1]{\textcolor{blue}{#1}}
+\newcommand{\bterm}[1]{\mathbin{\textcolor{blue}{#1}}}
+\newcommand{\LL}{\mathrm{LL}}
+\newcommand{\LR}{\mathrm{LR}}
+\newcommand{\follow}{\mathrm{FOLLOW}}
+\newcommand{\first}{\mathrm{FIRST}}
+\newcommand{\eps}{\mathrm{EPS}}
+\def\mybox#1#2{\fbox{\parbox[b][#1][b]{#2}{~}}}
+
+\newtheorem{exi}{}
+\newenvironment{exo}{\begin{exi}\em}{\end{exi}}
+
+\begin{document}
+\pagestyle{empty}
+\hrule
+\medbreak\medbreak
+\centerline{\textsf\large{\bf Grammaire et analyse: TD noté du vendredi 14 avril 2023}}
+\medbreak
+
+\noindent
+Donnez vos réponses uniquement à l'intérieur des cadres.
+Dans tous les exercices qui suivent, les minuscules sont les 
+terminaux, les majuscules sont les non-terminaux.
+
+\begin{exo}
+
+  Soit la grammaire suivante où $T$ est l'axiome, l'ensemble des terminaux est $\{ a, c, (, )\}$ et l'ensemble des non-terminaux $\{T, U, V\}$:
+
+\begin{itemize}
+\item[] $T \rightarrow a(U)$
+\item[]   $U \rightarrow VU\mid \varepsilon$
+\item[] $V \rightarrow c\mid T$
+\end{itemize}
+  \begin{enumerate}
+
+  \item
+    Donnez l'ensemble $EPS$ des non-terminaux effaçables.
+   \mybox{1cm}{5cm}
+  
+  \item
+    Donnez les ensembles $FIRST_1$ pour chacun des non-terminaux avec l'algorithme du cours. 
+
+    \begin{tabular}{|lp{3cm}p{3cm}p{3cm}|}
+      \hline
+      &&&\\
+      Graphe & T &U &V\\
+      &&&\\
+      Initialisation &&&\\
+      &&&\\
+     Propagation&&&\\
+     \hline
+    \end{tabular}
+
+    \vspace{0.5cm}
+
+  \item
+    Donnez les ensembles $FOLLOW_1$ pour chacun des non-terminaux   avec l'algorithme du cours.
+
+    \begin{tabular}{|lp{3cm}p{3cm}p{3cm}|}
+      \hline
+      &&&\\
+      Graphe & T &U &V\\
+      &&&\\
+      Initialisation &&&\\
+      &&&\\
+     Propagation&&&\\
+     \hline
+    \end{tabular}
+
+    \vspace{0.5cm}
+
+  \item Est-ce que la grammaire est $LL(1)$? Justifiez votre réponse.
+  
+  \mybox{5cm}{\linewidth}
+  \end{enumerate}
+  \end{exo}
+
+\begin{exo}
+On considère la grammaire suivante:
+\begin{itemize}
+\item[] $S \rightarrow T\$$
+\item[] $T \rightarrow aTb \mid c \mid Ud$
+\item[] $U \rightarrow a$
+\end{itemize}
+
+\begin{enumerate}
+\item Cette grammaire n'est pas LR(0). Donnez le début de la construction
+de l'automate caractéristique qui le montre.
+
+\mybox{4cm}{\linewidth}
+
+\item Donnez l'automate caractéristique dét. LR(1) pour cette
+grammaire. Elle est LR(1) ?
+
+\mybox{9cm}{\linewidth}
+
+\end{enumerate}
+
+\end{exo}
+
+\begin{exo}
+
+  Soit la grammaire suivante dont $S$ est l'axiome:
+\begin{itemize}
+\item[] $S \rightarrow aSa \mid TU$
+\item[]   $T \rightarrow bbT\mid \varepsilon $
+\item[]   $U \rightarrow c\mid \varepsilon $
+\end{itemize}
+
+
+\begin{enumerate}
+\item Donnez une dérivation pour le mot $aabbcaa$.
+  
+\mybox{1cm}{\linewidth}
+
+\item Parmi les mots suivants, indiquez avec {\bf Oui} ou {\bf Non}, s'ils sont
+dans le langage de la grammaire.
+
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\hspace*{2ex}$\epsilon$\hspace*{2ex}&$aa$&$aaa$&$aacaa$&$abba$&$bbcc$\\
+\hline
+&&&&&\\
+\hline
+\end{tabular}
+
+\item
+  Décrivez le langage généré par cette grammaire. (Par exemple, avec $\{\ldots \mid\ldots \}$)
+  
+ \mybox{1.5cm}{\linewidth}
+
+ 
+\end{enumerate}
+
+ \end{exo}
+
+
+\end{document}
+
+
+
+
+  
+  

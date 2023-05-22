@@ -23,6 +23,19 @@ public class CommandLES implements Runnable{
     @CommandLine.Parameters(description = "Path of the input .tex exam file")
     String inputPath;    // assigned index = "0"
 
+    @CommandLine.Parameters(description = "Number of desired variations to generate, default is 2")
+    int numberVariations;    // assigned index = "0"
+
+
+    /**
+     * Output Directory.
+     */
+    @CommandLine.Option(names = {"--output-dir"},
+            description = "output directory, default is output/")
+    private String outputDir = "output/";
+
+
+
 
     /**
      * Runs the command.
@@ -32,6 +45,7 @@ public class CommandLES implements Runnable{
         logger.info("LES command called");
         logger.info("input path is " + inputPath);
         Document document = new Document(inputPath);
+        document.generateVariations(outputDir,numberVariations);
     }
 
 

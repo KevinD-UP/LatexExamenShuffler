@@ -15,5 +15,6 @@ public class Exercice {
         this.fixed = fixed;
     }
 
+    public String getContent(){return this.content;}
 
 }

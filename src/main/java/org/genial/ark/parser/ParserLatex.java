@@ -2,7 +2,7 @@ package org.genial.ark.parser;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.genial.ark.App;
+
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -16,11 +16,12 @@ public class ParserLatex {
      */
     private static final Logger logger = LogManager.getLogger(ParserLatex.class);
 
-    public void parse(){
+    public static void parse(String inputPath) {
+        logger.info("Parsing input file");
         try
         {
             //the file to be opened for reading
-            FileInputStream fis=new FileInputStream("Demo.txt");
+            FileInputStream fis=new FileInputStream(inputPath);
             Scanner sc=new Scanner(fis);    //file to be scanned
             //returns true if there is another line to read
             while(sc.hasNextLine())
@@ -31,7 +32,7 @@ public class ParserLatex {
         }
         catch(IOException e)
         {
-            e.printStackTrace();
+            logger.error("Exception while parsing file " + inputPath + " : " + e.getMessage());
         }
     }
 

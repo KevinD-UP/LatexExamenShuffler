@@ -2,6 +2,7 @@ package org.genial.ark.command;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.genial.ark.parser.ParserLatex;
 import picocli.CommandLine;
 
 import java.util.List;
@@ -20,10 +21,8 @@ public class CommandLES implements Runnable{
     @CommandLine.Parameters(hidden = true)   // "hidden": don't show this parameter in usage help message
     List<String> allParameters;  // no "index" attribute: captures _all_ arguments
 
-    @CommandLine.Parameters
-    String group;    // assigned index = "0"
-    @CommandLine.Parameters
-    String artifact; // assigned index = "1"
+    @CommandLine.Parameters(description = "Path of the input .tex exam file")
+    String inputPath;    // assigned index = "0"
 
 
     /**
@@ -32,8 +31,8 @@ public class CommandLES implements Runnable{
     @Override
     public void run() {
         logger.info("LES command called");
-        System.out.println(group);
-        System.out.println(artifact);
+        logger.info("input path is " + inputPath);
+        ParserLatex.parse(inputPath);
     }
 
 

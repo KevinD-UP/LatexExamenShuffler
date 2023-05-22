@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.stream.IntStream;
 
 public class Document {
 
@@ -21,14 +22,30 @@ public class Document {
 
     private ArrayList<Exercice> exercices = new ArrayList<>();
 
-
-
     private String beforeExercicesContent;
 
     private String afterExercicesContent;
 
     public Document(String inputPath){
         parse(inputPath);
+        shuffle();
+    }
+
+    private int[] shuffle(){
+        int[] exerciseOrder = IntStream.range(0, this.exercices.size()).toArray();
+
+        for(int i =0; i < exerciseOrder.length ; i ++){
+            int indexSwapA =  (int)(Math.random() * exerciseOrder.length);
+            int indexSwapB = (int)(Math.random() * exerciseOrder.length);
+
+            // SWAPPING EXERCISES A INDEX A AND B
+            if(indexSwapA != indexSwapB){
+                int tmp =  exerciseOrder[indexSwapA]; // TEMPORARILY SAVING EXERCISE A
+                exerciseOrder[indexSwapA] = exerciseOrder[indexSwapB]; // COPYING EXERCISE B INTO EXERCISE A
+                exerciseOrder[indexSwapB] = tmp; // COPYING EXERCISE A INTO EXERCISE B
+            }
+        }
+        return  exerciseOrder;
     }
 
 

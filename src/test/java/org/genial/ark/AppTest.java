@@ -1,4 +1,4 @@
-package org.example.ark;
+package org.genial.ark;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

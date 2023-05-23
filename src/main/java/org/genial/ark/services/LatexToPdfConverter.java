@@ -19,7 +19,7 @@ public class LatexToPdfConverter {
 
     public void convert(String latexFilePath, String outputdir) {
         // Run pdflatex command to compile LaTeX file
-        logger.info("Trying to convert to pdf : " + latexFilePath);
+        logger.info("Trying to convert to pdf : " + latexFilePath + " with " + this.compiler);
         try {
             ProcessBuilder processBuilder = new ProcessBuilder(this.compiler, "-output-directory=" + outputdir, latexFilePath);
             Process process = processBuilder.start();

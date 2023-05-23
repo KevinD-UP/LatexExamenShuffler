@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.stream.IntStream;
 
@@ -48,11 +49,9 @@ public class Document {
 
     private int[] shuffle(){
         int[] exerciseOrder = IntStream.range(0, this.exercices.size()).toArray();
-
         for(int i =0; i < exerciseOrder.length ; i ++){
             int indexSwapA =  (int)(Math.random() * exerciseOrder.length);
             int indexSwapB = (int)(Math.random() * exerciseOrder.length);
-
             // SWAPPING EXERCISES A INDEX A AND B
             // WE SWAP ONLY IF WE DREW TWO DIFFRENT INDEX AND IF NONE OF THEM SHOULD BE FIXED
             if(indexSwapA != indexSwapB && !this.exercices.get(exerciseOrder[indexSwapA]).isFixed() && !this.exercices.get(exerciseOrder[indexSwapB]).isFixed()   ){

@@ -47,16 +47,13 @@
 
 Utilisez uniquement les espaces encadrées prévues pour répondre.
 
-\begin{exo}%fixed
-%i
+\begin{exo}
 
   On considère les affectations suivantes:$
 v_1 = [ x\mapsto 1] \quad
 v_2= [ x\mapsto 1, y\mapsto 1 ]  \quad
 v_3= [ y\mapsto 1, z\mapsto 1 ]$.
 Remplissez le tableau suivant ($0$ ou $1$ dans les trois premières colonnes et $vrai$ ou $\mathit{faux}$ dans le reste)~:
-%endi
-%qb
 \begin{tabular}{|c|c|c|c|c|c|c|}
   \hline
     Formule $p$ &$\inte{p}{v_1}$&$\inte{p}{v_2}$&$\inte{p}{v_3}$&$p$ valide ?&$p$ satisfaisable ?&$p$ contradictoire ?\\[0.5ex]
@@ -68,25 +65,27 @@ Remplissez le tableau suivant ($0$ ou $1$ dans les trois premières colonnes et 
     $((x \land z) \vee ((\neg x \land z) \vee \neg z))$&&&&&&\\[0.5ex]
     \hline
   \end{tabular}
-  %endqb
 \end{exo}
 
-\begin{exo}
+\begin{exo}%fixed
+
   Formalisez les phrases suivantes en logique propositionnelle
   (vous pouvez utiliser l'implication).
   Indiquez pour chaque variable propositionnelle que vous utilisez
   à quoi elle correspond.
 
+  %qb
   \begin{enumerate}
   \item Paris est belle.
   \item Si Paris est belle, alors Berlin est belle.
   \item Si Berlin n'est pas belle, alors ni Paris ni Rome sont belles.
   \end{enumerate}
-
+  %endqb
 
   \framebox[\textwidth]{
       \rule[-0.4cm]{0mm}{4cm}
   }
+
 \end{exo}
 
 
@@ -116,6 +115,7 @@ Remplissez le tableau suivant ($0$ ou $1$ dans les trois premières colonnes et 
   $hauteur((x\vee(\neg x \land y)))=4$ et
   $hauteur(\neg x) = 2$.
   Complétez les définitions récursives suivantes:
+  %qb
   \begin{itemize}
   \item $taille(x) = $ \framebox[1cm]{\rule[-0.2cm]{0mm}{0.5cm}},
     $hauteur(x) = $ \framebox[1cm]{\rule[-0.2cm]{0mm}{0.5cm}}
@@ -126,7 +126,7 @@ Remplissez le tableau suivant ($0$ ou $1$ dans les trois premières colonnes et 
     \item $taille((p \vee q)) = $ \framebox[4cm]{\rule[-0.2cm]{0mm}{0.5cm}},
         $hauteur((p \vee q)) = $ \framebox[4cm]{\rule[-0.2cm]{0mm}{0.5cm}}
   \end{itemize}
-  
+  %endqb
   Montrez par induction structurelle que pour toute formule propositionnelle
   $p$ on a $taille(p) \geq hauteur(p)$.\\[2ex]
    \framebox[\textwidth]{

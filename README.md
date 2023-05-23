@@ -26,7 +26,7 @@ Vous pouvez également préciser avec l'option `--output-filename outputFilename
 
 ## Fonctionnalités
 
-- Les variations sont des permutations sur l'ordre des exercices.
+### Exercices 
 
 - Pour être accepté en entrée, un document .tex doit définir 
 
@@ -41,6 +41,32 @@ avant le premier exercice.
 - Tout ce qui se trouve entre une ligne `\end{exo}` et une ligne `\begin{exo}` ne sera pas reporté sur les variations générées.
 
 - Il est possible d'indiquer qu'un exercice doit toujours être à la même position en écrivant le commentaire `%fixed` directement collé à `\begin{exo}`.
+
+### Question
+
+- Il est possible de définir un bloc 
+```
+\begin{itemize}
+\item....
+	....
+\item ....
+\end{itemize}
+```
+
+ou un bloc 
+
+```
+\begin{enumerate}
+\item....
+	....
+\item ....
+\end{enumerate}
+```
+
+Comme étant un bloc de questions dont on souhaite changer l'ordre en ajoutant `%qb` à la ligne précédant le début du bloc et `%endqb` à la ligne suivant la fin du bloc. L'ordre des items à l'interieur du bloc sera alors mélangé. 
+
+### Compilation
+
 - Il est possible de choisir le compilateur LaTeX que l'on souhaite utiliser avec l'option `--compiler nom-du-compilateur`. Par défaut le compilateur utilisé est pdfLaTeX. Les compilateurs supportés sont : pdfLaTeX, LuaLaTeX ou XeLaTeX
 
 ## Auteurs

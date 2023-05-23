@@ -50,6 +50,13 @@ public class CommandLES implements Runnable{
     private String compiler = "pdflatex";
 
     /**
+     * subset.
+     */
+    @CommandLine.Option(names = {"--subset"},
+            description = "Only keep a subset of exercices made from all exercices")
+    private int subset;
+
+    /**
      * Runs the command.
      */
     @Override
@@ -60,8 +67,12 @@ public class CommandLES implements Runnable{
             outputDir = outputDir + "/";
         }
         Document document = new Document(inputPath);
-        document.generateVariations(outputDir, filename, numberVariations);
         LatexToPdfConverter converter = new LatexToPdfConverter(compiler);
+        if(subset != 0){
+            document.generateVariationsSubset(outputDir, filename, numberVariations, subset);
+        } else {
+            document.generateVariations(outputDir, filename, numberVariations);
+        }
         for(int i = 0; i < numberVariations; i++) {
             for(int j = 0; j < 2; j++) {
                 converter.convert(outputDir + filename + (i+1) + ".tex", outputDir);

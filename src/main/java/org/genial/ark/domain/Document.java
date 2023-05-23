@@ -7,9 +7,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.IntStream;
 
 public class Document {
@@ -46,6 +44,35 @@ public class Document {
         }
     }
 
+    public void generateVariationsSubset(String outputDirectory, String filename, int numberVariations, int subset){
+        for(int i = 1; i <= numberVariations; i++){
+            int[] exerciseOrder = this.shuffle();
+            String outputFileName = "./" + outputDirectory + filename + i + ".tex";
+            List<Integer> selectedElements = new ArrayList<>();
+            Random random = new Random();
+            if (subset > exerciseOrder.length) {
+                logger.info("The subset that you want is greater than the number of exercises ! Every exercises will be use.");
+                dumpToTex(exerciseOrder, outputFileName);
+            }
+            else {
+                for (int j = 0; j < subset; j++) {
+                    int randomIndex;
+                    int selectedElement;
+
+                    do {
+                        randomIndex = random.nextInt(exerciseOrder.length);
+                        selectedElement = exerciseOrder[randomIndex];
+                    } while (selectedElements.contains(selectedElement));
+
+                    selectedElements.add(selectedElement);
+                    Collections.sort(selectedElements);
+                }
+                int[] subsetExerciseOrder = this.shuffle(selectedElements.stream().mapToInt(Integer::intValue).toArray());
+                dumpToTex(subsetExerciseOrder, outputFileName);
+            }
+        }
+    }
+
 
     private int[] shuffle(){
         int[] exerciseOrder = IntStream.range(0, this.exercices.size()).toArray();
@@ -63,13 +90,23 @@ public class Document {
         return  exerciseOrder;
     }
 
-    private void dumpToTex(int[] exercisesPermutation, String outputFileName) {
-
-        if (exercisesPermutation.length != this.exercices.size()) {
-            logger.error("Size of permutation "+ exercisesPermutation.length+ " differs from number of exercises "+this.exercices.size());
-            return;
+    private int[] shuffle(int[] tab){
+        int[] exerciseOrder = tab.clone();
+        for(int i = 0; i < exerciseOrder.length ; i ++){
+            int indexSwapA =  (int)(Math.random() * exerciseOrder.length);
+            int indexSwapB = (int)(Math.random() * exerciseOrder.length);
+            // SWAPPING EXERCISES A INDEX A AND B
+            // WE SWAP ONLY IF WE DREW TWO DIFFRENT INDEX AND IF NONE OF THEM SHOULD BE FIXED
+            if(indexSwapA != indexSwapB && !this.exercices.get(exerciseOrder[indexSwapA]).isFixed() && !this.exercices.get(exerciseOrder[indexSwapB]).isFixed()   ){
+                int tmp =  exerciseOrder[indexSwapA]; // TEMPORARILY SAVING EXERCISE A
+                exerciseOrder[indexSwapA] = exerciseOrder[indexSwapB]; // COPYING EXERCISE B INTO EXERCISE A
+                exerciseOrder[indexSwapB] = tmp; // COPYING EXERCISE A INTO EXERCISE B
+            }
         }
+        return exerciseOrder;
+    }
 
+    private void dumpToTex(int[] exercisesPermutation, String outputFileName) {
         try {
             Path of = Path.of(outputFileName);
             Files.createDirectories(of.getParent());
@@ -138,7 +175,7 @@ public class Document {
                         currentExerciceContent.append(currentLine).append("\n");
                     } else if (state == 0){ // WE HAVE NOT ENCOUNTERED AN EXERCISE YET
                         this.beforeExercicesContent += currentLine + "\n";
-                    } else if( state == 2){ // WE HAVE ENCOUNTERED AT LEAST AN EXERCISE BUT ARE NOT INSIDE OF ONE
+                    } else if(state == 2){ // WE HAVE ENCOUNTERED AT LEAST AN EXERCISE BUT ARE NOT INSIDE OF ONE
                         this.afterExercicesContent += currentLine + "\n";
                     }
                 }

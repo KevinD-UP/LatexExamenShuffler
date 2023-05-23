@@ -76,11 +76,11 @@ public class Document {
             Files.createDirectories(of.getParent());
             Files.writeString(of, this.beforeExercicesContent, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
             for(int index : exercisesPermutation) {
-                Files.writeString(of, this.exercices.get(index).getContent(), StandardOpenOption.APPEND);
+                Files.writeString(of, this.exercices.get(index).toString(), StandardOpenOption.APPEND);
             }
             Files.writeString(of, this.afterExercicesContent, StandardOpenOption.APPEND);
         } catch (Exception e) {
-            logger.error("Exception occurred when trying to dump to Text:"+e.toString());
+            logger.error("Exception occurred when trying to dump to Text:"+e.getMessage());
             e.printStackTrace();
         }
     }
@@ -96,7 +96,7 @@ public class Document {
             StringBuilder currentExerciceContent = new StringBuilder();
             int state = 0;
             int lineNum =0; // index of the line currently being read
-            boolean currentExerciseIsFixed = false; // true if exercise currently being parsed should be fixed
+            int exerciseCount = 1; // current exercise for logging purposes
             /*
             state 0 : started parsing file, initial configuration before exercices
             state 1 : has seen a \begin{exo} line but no \end{exo} line yet
@@ -108,7 +108,6 @@ public class Document {
                 //BEGIN EXO
                 if(currentLine.trim().startsWith(BEGIN_EXO)){
                     if(state == 2 || state == 0){
-                        currentExerciseIsFixed = currentLine.trim().equals(BEGIN_EXO + COMMENT + FIXED); // REMEMBERING IF EXERCISE CURRENTLY BEING PARSED SHOULD BE FIXED OR NOT
                         state = 1; // CHANGING TO STATE 1 BECAUSE WE ARE INSIDE AN EXERCISE
                         currentExerciceContent.append(currentLine).append("\n");
                     } else{
@@ -120,9 +119,11 @@ public class Document {
                 //END EXO
                 else if(currentLine.trim().equals(END_EXO)){
                     if(state == 1){
-                        state = 2; // CHANGING TO STATE 2 BECAUSE WE ARE NOT INSIDE AN EXERCISE BUT WE READ AT LEAT ONE
+                        state = 2; // CHANGING TO STATE 2 BECAUSE WE ARE NOT INSIDE AN EXERCISE BUT WE READ AT LEAST ONE
                         currentExerciceContent.append(currentLine).append("\n");
-                        Exercice exercice = new Exercice(currentExerciceContent.toString(), currentExerciseIsFixed);
+                        logger.info("Creating exercise " + exerciseCount);
+                        exerciseCount += 1;
+                        Exercice exercice = ExerciseFactory.exerciceFactory(currentExerciceContent.toString());
                         this.exercices.add(exercice); // REGISTERING EXERCISE INSIDE THE DOCUMENT
                         currentExerciceContent = new StringBuilder(); // RESET FOR NEXT EXERCISE
                     } else {

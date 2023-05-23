@@ -1,8 +1,7 @@
 package org.genial.ark.domain;
 
-public interface Exercice {
+public interface ContentExercise {
 
-    boolean isFixed();
-
+    @Override
     String toString();
 }

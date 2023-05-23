@@ -35,6 +35,19 @@ public class CommandLES implements Runnable{
             description = "output directory, default is output/")
     private String outputDir = "output/";
 
+    /**
+     * Output filename.
+     */
+    @CommandLine.Option(names = {"--output-filename"},
+            description = "output filename, default is generated")
+    private String filename = "generated";
+
+    /**
+     * compiler.
+     */
+    @CommandLine.Option(names = {"--compiler"},
+            description = "compiler, possible choices are: pdflatex, lualatex or xelatex. Default is pdflatex")
+    private String compiler = "pdflatex";
 
     /**
      * Runs the command.
@@ -43,12 +56,15 @@ public class CommandLES implements Runnable{
     public void run() {
         logger.info("LES command called");
         logger.info("input path is " + inputPath);
+        if (!outputDir.endsWith("/")) {
+            outputDir = outputDir + "/";
+        }
         Document document = new Document(inputPath);
-        document.generateVariations(outputDir,numberVariations);
-        LatexToPdfConverter converter = new LatexToPdfConverter();
+        document.generateVariations(outputDir, filename, numberVariations);
+        LatexToPdfConverter converter = new LatexToPdfConverter(compiler);
         for(int i = 0; i < numberVariations; i++) {
-            for(int j = 0; j < 3; j++) {
-                converter.convert(outputDir + "generated" + (j+1));
+            for(int j = 0; j < 2; j++) {
+                converter.convert(outputDir + filename + (i+1) + ".tex", outputDir);
             }
         }
     }

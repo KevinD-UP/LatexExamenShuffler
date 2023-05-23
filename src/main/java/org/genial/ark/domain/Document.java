@@ -4,9 +4,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 import java.util.stream.IntStream;
 
@@ -24,7 +25,7 @@ public class Document {
     public static final String COMMENT = "%";
     public static final String FIXED = "fixed";
 
-    private ArrayList<Exercice> exercices = new ArrayList<>();
+    private final ArrayList<Exercice> exercices = new ArrayList<>();
 
 
     private String beforeExercicesContent = "";
@@ -36,10 +37,10 @@ public class Document {
         shuffle();
     }
 
-    public void generateVariations(String outputDirectory, int numberVariations){
-        for(int i = 1; i<=numberVariations; i ++){
+    public void generateVariations(String outputDirectory, String filename, int numberVariations){
+        for(int i = 1; i <= numberVariations; i++){
             int[] exerciseOrder = this.shuffle();
-            String outputFileName = "./" + outputDirectory + "generated" + i + ".tex";
+            String outputFileName = "./" + outputDirectory + filename + i + ".tex";
             dumpToTex(exerciseOrder, outputFileName);
         }
     }
@@ -62,20 +63,23 @@ public class Document {
         }
         return  exerciseOrder;
     }
-        private void dumpToTex(int[]exercisesPermutation, String outputFileName) {
-        
+
+    private void dumpToTex(int[] exercisesPermutation, String outputFileName) {
+
         if (exercisesPermutation.length != this.exercices.size()) {
             logger.error("Size of permutation "+ exercisesPermutation.length+ " differs from number of exercises "+this.exercices.size());
             return;
         }
-        try(PrintWriter fd = new PrintWriter(outputFileName) ){
-            
-            fd.print(this.beforeExercicesContent);
-            for(int index : exercisesPermutation){
-                fd.print(this.exercices.get(index).getContent());}    
-            
-            fd.print(this.afterExercicesContent);
-        }catch (Exception e){
+
+        try {
+            Path of = Path.of(outputFileName);
+            Files.createDirectories(of.getParent());
+            Files.writeString(of, this.beforeExercicesContent, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+            for(int index : exercisesPermutation) {
+                Files.writeString(of, this.exercices.get(index).getContent(), StandardOpenOption.APPEND);
+            }
+            Files.writeString(of, this.afterExercicesContent, StandardOpenOption.APPEND);
+        } catch (Exception e) {
             logger.error("Exception occurred when trying to dump to Text:"+e.toString());
             e.printStackTrace();
         }
@@ -102,9 +106,9 @@ public class Document {
             {
                 String currentLine = sc.nextLine();
                 //BEGIN EXO
-                if(currentLine.startsWith(BEGIN_EXO)){
+                if(currentLine.trim().startsWith(BEGIN_EXO)){
                     if(state == 2 || state == 0){
-                        currentExerciseIsFixed = currentLine.equals(BEGIN_EXO + COMMENT + FIXED); // REMEMBERING IF EXERCISE CURRENTLY BEING PARSED SHOULD BE FIXED OR NOT
+                        currentExerciseIsFixed = currentLine.trim().equals(BEGIN_EXO + COMMENT + FIXED); // REMEMBERING IF EXERCISE CURRENTLY BEING PARSED SHOULD BE FIXED OR NOT
                         state = 1; // CHANGING TO STATE 1 BECAUSE WE ARE INSIDE AN EXERCISE
                         currentExerciceContent.append(currentLine).append("\n");
                     } else{
@@ -114,7 +118,7 @@ public class Document {
                 }
 
                 //END EXO
-                else if(currentLine.equals(END_EXO)){
+                else if(currentLine.trim().equals(END_EXO)){
                     if(state == 1){
                         state = 2; // CHANGING TO STATE 2 BECAUSE WE ARE NOT INSIDE AN EXERCISE BUT WE READ AT LEAT ONE
                         currentExerciceContent.append(currentLine).append("\n");

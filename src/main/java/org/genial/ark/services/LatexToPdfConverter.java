@@ -13,10 +13,17 @@ public class LatexToPdfConverter {
      */
     private static final Logger logger = LogManager.getLogger(org.genial.ark.services.LatexToPdfConverter.class);
 
-    public void convert(String latexFilePath) {
+    private final String compiler;
+
+    public LatexToPdfConverter(String compiler){
+        this.compiler = compiler;
+    }
+
+    public void convert(String latexFilePath, String outputdir) {
         // Run pdflatex command to compile LaTeX file
+        logger.info("Trying to convert to pdf : " + latexFilePath);
         try {
-            ProcessBuilder processBuilder = new ProcessBuilder("pdflatex", "-interaction=batchmode", latexFilePath);
+            ProcessBuilder processBuilder = new ProcessBuilder(this.compiler, "-output-directory=" + outputdir, latexFilePath);
             Process process = processBuilder.start();
 
             // Read the output of the command

@@ -2,7 +2,7 @@ package org.genial.ark.domain;
 
 public class Exercice {
 
-    private String content;
+    private final String content;
 
     private final boolean fixed;
 

@@ -3,6 +3,7 @@ package org.genial.ark.command;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.genial.ark.domain.Document;
+import org.genial.ark.services.LatexToPdfConverter;
 import picocli.CommandLine;
 
 import java.util.List;
@@ -44,6 +45,12 @@ public class CommandLES implements Runnable{
         logger.info("input path is " + inputPath);
         Document document = new Document(inputPath);
         document.generateVariations(outputDir,numberVariations);
+        LatexToPdfConverter converter = new LatexToPdfConverter();
+        for(int i = 0; i < numberVariations; i++) {
+            for(int j = 0; j < 3; j++) {
+                converter.convert(outputDir + "generated" + (j+1));
+            }
+        }
     }
 
 

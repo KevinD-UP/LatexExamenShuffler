@@ -22,9 +22,11 @@ public class ParametrizedContentBlock implements ContentBlock{
         Matcher matcher = pattern.matcher(this.content);
         // Check all occurrences
         while (matcher.find()) {
-            for(int i = matcher.start() +1 ; i < matcher.end(); i ++){
-                if(this.scope.isVariable(this.content.charAt(i))){
-                    charArray[i] = this.scope.getValueForName(this.content.charAt(i)).charAt(0);
+            if(matcher.hasMatch()){
+                for(int i = matcher.start() +1 ; i < matcher.end(); i ++){
+                    if(this.scope.isVariable(this.content.charAt(i))){
+                        charArray[i] = this.scope.getValueForName(this.content.charAt(i)).charAt(0);
+                    }
                 }
             }
         }

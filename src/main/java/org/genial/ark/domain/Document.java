@@ -2,6 +2,8 @@ package org.genial.ark.domain;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
@@ -29,10 +31,10 @@ public class Document {
     public static final String COMMENT = "%";
     public static final String FIXED = "fixed";
 
-    private ArrayList<Exercice> exercices = new ArrayList<>();
+    private ArrayList<Exercice> exercises = new ArrayList<>();
 
     private String inputPath;
-    private String beforeExercicesContent = "";
+    private String beforeExercisesContent = "";
 
     private String afterExercisesContent = "";
 
@@ -64,6 +66,9 @@ public class Document {
     }
 
     public int[][] generateVariationsSubset(String outputDirectory, String filename, int numberVariations, int subset){
+
+        ParameterizedDocument parameterizedDocument = new ParameterizedDocument(inputPath);
+        parseToExercises(parameterizedDocument.generateParameterizedDocument());
         List<Integer> selectedElements = new ArrayList<>();
         Random random = new Random();
 
@@ -72,7 +77,7 @@ public class Document {
             int selectedElement;
 
             do {
-                randomIndex = random.nextInt(this.exercise.size());
+                randomIndex = random.nextInt(this.exercises.size());
                 selectedElement = randomIndex;
             } while (selectedElements.contains(selectedElement));
 
@@ -91,16 +96,18 @@ public class Document {
     }
 
     public int[][] generateVariationsSubsetRange(String outputDirectory, String filename, int numberVariations, int nbExo, int range){
+        ParameterizedDocument parameterizedDocument = new ParameterizedDocument(inputPath);
+        parseToExercises(parameterizedDocument.generateParameterizedDocument());
         List<Integer> selectedElements = new ArrayList<>();
         Random random = new Random();
 
-        for (int i = 0; i < this.exercise.size(); i += range) {
+        for (int i = 0; i < this.exercises.size(); i += range) {
             for(int j = 0; j < nbExo; j++){
                 int randomIndex;
                 int selectedElement;
 
                 do {
-                    randomIndex = random.nextInt(i, min(this.exercise.size(), i + range));
+                    randomIndex = random.nextInt(i, min(this.exercises.size(), i + range));
                     selectedElement = randomIndex;
                 } while (selectedElements.contains(selectedElement));
 
@@ -139,7 +146,7 @@ public class Document {
         ArrayList<Integer> fixedExerciseArray  = new ArrayList<>();
         ArrayList<Integer> unfixedExerciseArray  = new ArrayList<>();
         int currentExercisePos = 0 ;
-        for(Exercice ex : this.exercise){
+        for(Exercice ex : this.exercises){
             if(ex.isFixed()){
                 fixedExerciseArray.add(currentExercisePos);
             }else{
@@ -159,14 +166,14 @@ public class Document {
         PermutationIterator <Integer> shuffleIterator = new PermutationIterator<Integer>(unfixedExerciseArray);
 
         // tableau de retour de permutations d'exercices
-        int [][] shuffledExercicesToReturn = new int[numberShuffleWanted][this.exercise.size()];
+        int [][] shuffledExercicesToReturn = new int[numberShuffleWanted][this.exercises.size()];
 
         //merger les exercices qui peuvent être ré-arrangés et ceux qui ne le peuvent pas
         for (int currentlyProcessedShuffle = 0 ; currentlyProcessedShuffle < numberShuffleWanted; currentlyProcessedShuffle++  ){
 
             // toutes les cases de la permutation actuelle sont initialement marqués comme vides
             final int CASEVIDE=-1;
-            for(int fillingPos = 0; fillingPos < this.exercise.size(); fillingPos++)shuffledExercicesToReturn[currentlyProcessedShuffle][fillingPos]=CASEVIDE;
+            for(int fillingPos = 0; fillingPos < this.exercises.size(); fillingPos++)shuffledExercicesToReturn[currentlyProcessedShuffle][fillingPos]=CASEVIDE;
 
             //on met les exercices qui ne peuvent pas être réordonnées
             for (int fixedExercisePos: fixedExerciseArray) shuffledExercicesToReturn[currentlyProcessedShuffle][fixedExercisePos]=fixedExercisePos;
@@ -193,7 +200,7 @@ public class Document {
         ArrayList<Integer> fixedExerciseArray  = new ArrayList<Integer>();
         ArrayList<Integer> unfixedExerciseArray  = new ArrayList<Integer>();
         for(int exId: exerciseOrder){
-            if(this.exercise.get(exId).isFixed()){
+            if(this.exercises.get(exId).isFixed()){
                 fixedExerciseArray.add(exId);
             }else{
                 unfixedExerciseArray.add(exId);
@@ -244,7 +251,7 @@ public class Document {
             int indexSwapB = (int)(Math.random() * exerciseOrder.length);
             // SWAPPING EXERCISES A INDEX A AND B
             // WE SWAP ONLY IF WE DREW TWO DIFFRENT INDEX AND IF NONE OF THEM SHOULD BE FIXED
-            if(indexSwapA != indexSwapB && !this.exercise.get(exerciseOrder[indexSwapA]).isFixed() && !this.exercise.get(exerciseOrder[indexSwapB]).isFixed()){
+            if(indexSwapA != indexSwapB && !this.exercises.get(exerciseOrder[indexSwapA]).isFixed() && !this.exercises.get(exerciseOrder[indexSwapB]).isFixed()){
                 int tmp =  exerciseOrder[indexSwapA]; // TEMPORARILY SAVING EXERCISE A
                 exerciseOrder[indexSwapA] = exerciseOrder[indexSwapB]; // COPYING EXERCISE B INTO EXERCISE A
                 exerciseOrder[indexSwapB] = tmp; // COPYING EXERCISE A INTO EXERCISE B
@@ -257,9 +264,9 @@ public class Document {
         try {
             Path of = Path.of(outputFileName);
             Files.createDirectories(of.getParent());
-            Files.writeString(of, this.beforeExerciseContent, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+            Files.writeString(of, this.beforeExercisesContent, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
             for(int index : exercisesPermutation) {
-                Files.writeString(of, this.exercise.get(index).toString(), StandardOpenOption.APPEND);
+                Files.writeString(of, this.exercises.get(index).toString(), StandardOpenOption.APPEND);
             }
             Files.writeString(of, this.afterExercisesContent, StandardOpenOption.APPEND);
         } catch (Exception e) {
@@ -271,9 +278,9 @@ public class Document {
 
 
     private void parseToExercises(String content) {
-        this.exercices = new ArrayList<>();
-        this.beforeExercicesContent = "";
-        this.afterExercicesContent = "";
+        this.exercises = new ArrayList<>();
+        this.beforeExercisesContent = "";
+        this.afterExercisesContent = "";
         logger.info("Parsing input file");
         Scanner sc=new Scanner(content);    //file to be scanned
         StringBuilder currentExerciceContent = new StringBuilder();
@@ -307,7 +314,7 @@ public class Document {
                     logger.info("Creating exercise " + exerciseCount);
                     exerciseCount += 1;
                     Exercice exercice = ExerciseFactory.exerciceFactory(currentExerciceContent.toString());
-                    this.exercices.add(exercice); // REGISTERING EXERCISE INSIDE THE DOCUMENT
+                    this.exercises.add(exercice); // REGISTERING EXERCISE INSIDE THE DOCUMENT
                     currentExerciceContent = new StringBuilder(); // RESET FOR NEXT EXERCISE
                 } else {
                     logger.error("Error, malformed document, encountered " + END_EXO + " at line " + lineNum + " but no exercise was open");
@@ -321,9 +328,9 @@ public class Document {
                 if(state == 1){
                     currentExerciceContent.append(currentLine).append("\n");
                 } else if (state == 0){ // WE HAVE NOT ENCOUNTERED AN EXERCISE YET
-                    this.beforeExercicesContent += currentLine + "\n";
+                    this.beforeExercisesContent += currentLine + "\n";
                 } else if(state == 2){ // WE HAVE ENCOUNTERED AT LEAST AN EXERCISE BUT ARE NOT INSIDE OF ONE
-                    this.afterExercicesContent += currentLine + "\n";
+                    this.afterExercisesContent += currentLine + "\n";
                 }
             }
             lineNum += 1;

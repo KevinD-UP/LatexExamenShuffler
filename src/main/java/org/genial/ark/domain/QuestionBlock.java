@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.stream.IntStream;
 
@@ -52,6 +53,7 @@ public class QuestionBlock implements ContentExercise{
         state = 1 seen an item
          */
         StringBuilder currentString = new StringBuilder();
+        boolean currentQuestionIsFixed = false;
         while(sc.hasNextLine()){
             String currentLine = sc.nextLine();
             if(i == 0 || !sc.hasNextLine()){
@@ -62,10 +64,17 @@ public class QuestionBlock implements ContentExercise{
 
             else if(currentLine.trim().startsWith("\\item")){
                 if(state != 0){
-                    questionsArrayList.add(new Question(currentString.toString(),false));
+                    questionsArrayList.add(new Question(currentString.toString(),currentQuestionIsFixed));
+                    currentQuestionIsFixed = false;
                     currentString = new StringBuilder();
                     currentString.append(currentLine).append("\n");
+                    if(currentLine.trim().endsWith("%fixed")){
+                        currentQuestionIsFixed = true;
+                    }
                 } else{
+                    if(currentLine.trim().endsWith("%fixed")){
+                        currentQuestionIsFixed = true;
+                    }
                     currentString.append(currentLine).append("\n");
                     state = 1;
                 }

@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import org.apache.commons.collections4.iterators.PermutationIterator;
+import org.genial.ark.domain.parameterized.ParameterizedDocument;
 
 import static java.lang.Math.min;
 
@@ -39,7 +40,9 @@ public class Document {
     private String afterExercisesContent = "";
 
     public Document(String inputPath){
-        parse(inputPath);
+        ParameterizedDocument parameterizedDocument = new ParameterizedDocument(inputPath);
+        System.out.println(parameterizedDocument.toString());
+        //parseToExercises(inputPath);
     }
 
     public int[][] generateVariations(String outputDirectory, String filename, int numberVariations){
@@ -145,32 +148,32 @@ public class Document {
             numberShuffleWanted = numberShuffleAvailable.intValue();
         }
         // shuffle les exercices qui peuvent être ré-arrangés
-        
+
         PermutationIterator <Integer> shuffleIterator = new PermutationIterator<Integer>(unfixedExerciseArray);
-        
+
         // tableau de retour de permutations d'exercices
         int [][] shuffledExercicesToReturn = new int[numberShuffleWanted][this.exercise.size()];
-            
+
         //merger les exercices qui peuvent être ré-arrangés et ceux qui ne le peuvent pas
         for (int currentlyProcessedShuffle = 0 ; currentlyProcessedShuffle < numberShuffleWanted; currentlyProcessedShuffle++  ){
-        
+
             // toutes les cases de la permutation actuelle sont initialement marqués comme vides
             final int CASEVIDE=-1;
             for(int fillingPos = 0; fillingPos < this.exercise.size(); fillingPos++)shuffledExercicesToReturn[currentlyProcessedShuffle][fillingPos]=CASEVIDE;
 
             //on met les exercices qui ne peuvent pas être réordonnées
             for (int fixedExercisePos: fixedExerciseArray) shuffledExercicesToReturn[currentlyProcessedShuffle][fixedExercisePos]=fixedExercisePos;
-            
+
             //on met les exercices qui peuvent être réordonnées dans les cases restantes
             int[] aShuffle  = shuffleIterator.next().stream().mapToInt(Integer::intValue).toArray(); // on récupère une permutation d'exercices non fixés
-            
-            int exercisePosition = 0 ; // position ou le prochain exercice va être écrit  
+
+            int exercisePosition = 0 ; // position ou le prochain exercice va être écrit
             for (int exercise: aShuffle){
                 // tant que l'on se trouve sur une case d'exercice fixé
                 while (shuffledExercicesToReturn[currentlyProcessedShuffle][exercisePosition] != CASEVIDE) exercisePosition++;
                 // ici on se trouve sur une case vide
                 shuffledExercicesToReturn[currentlyProcessedShuffle][exercisePosition]=exercise ;
-            }    
+            }
         }
         return shuffledExercicesToReturn;
     }
@@ -259,13 +262,13 @@ public class Document {
     }
 
 
-    private void parse(String inputPath) {
+
+    private void parseToExercises(String inputPath) {
         logger.info("Parsing input file");
         try {
             //the file to be opened for reading
             FileInputStream fis=new FileInputStream(inputPath);
             Scanner sc=new Scanner(fis);    //file to be scanned
-            //returns true if there is another line to read
             StringBuilder currentExerciceContent = new StringBuilder();
             int state = 0;
             int lineNum =0; // index of the line currently being read

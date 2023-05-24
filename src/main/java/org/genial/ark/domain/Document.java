@@ -15,6 +15,8 @@ import java.util.Scanner;
 import org.apache.commons.math3.util.CombinatoricsUtils;
 import org.apache.commons.collections4.iterators.PermutationIterator;
 
+import static java.lang.Math.min;
+
 
 public class Document {
 
@@ -43,7 +45,7 @@ public class Document {
 
     public int[][] generateVariations(String outputDirectory, String filename, int numberVariations){
         int [][] allVariations = this.shuffle(numberVariations);
-        int n = Math.min(numberVariations, allVariations.length);
+        int n = min(numberVariations, allVariations.length);
         for(int i = 1; i <= n; i++){
             int[] exerciseOrder = allVariations[i - 1];
             String outputFileName = "./" + outputDirectory + filename + i + ".tex";
@@ -70,7 +72,7 @@ public class Document {
 
         int[] intArray = selectedElements.stream().mapToInt(Integer::intValue).toArray();
         int[][] allVariations = this.shuffle(intArray, numberVariations);
-        int n = Math.min(numberVariations, allVariations.length);
+        int n = min(numberVariations, allVariations.length);
         for(int i = 1; i <= n; i++){
             int[] exerciseOrder = allVariations[i - 1];
             String outputFileName = "./" + outputDirectory + filename + i + ".tex";
@@ -89,7 +91,7 @@ public class Document {
                 int selectedElement;
 
                 do {
-                    randomIndex = random.nextInt(i, i + range);
+                    randomIndex = random.nextInt(i, min(this.exercise.size(), i + range));
                     selectedElement = randomIndex;
                 } while (selectedElements.contains(selectedElement));
 
@@ -100,7 +102,7 @@ public class Document {
         int[] intArray = selectedElements.stream().mapToInt(Integer::intValue).toArray();
 
         int[][] allVariations = this.shuffle(intArray, numberVariations);
-        int m = Math.min(numberVariations, allVariations.length);
+        int m = min(numberVariations, allVariations.length);
         for(int i = 1; i <= m; i++){
             int[] exerciseOrder = allVariations[i - 1];
             String outputFileName = "./" + outputDirectory + filename + i + ".tex";

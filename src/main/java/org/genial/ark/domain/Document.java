@@ -8,7 +8,21 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.*;
+import java.io.PrintWriter;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.Scanner;
+
 import java.util.stream.IntStream;
+
+import javax.management.RuntimeErrorException;
+
+import org.apache.commons.math3.*;
+import org.apache.commons.math3.util.CombinatoricsUtils;
+import org.apache.commons.collections4.iterators.PermutationIterator;
+
 
 public class Document {
 
@@ -33,20 +47,22 @@ public class Document {
 
     public Document(String inputPath){
         parse(inputPath);
-        shuffle();
+        shuffle(1);
     }
 
     public void generateVariations(String outputDirectory, String filename, int numberVariations){
+        int [][] allVariations = this.shuffle(numberVariations);
         for(int i = 1; i <= numberVariations; i++){
-            int[] exerciseOrder = this.shuffle();
+            int[] exerciseOrder = allVariations[i-1];
             String outputFileName = "./" + outputDirectory + filename + i + ".tex";
             dumpToTex(exerciseOrder, outputFileName);
         }
     }
 
     public void generateVariationsSubset(String outputDirectory, String filename, int numberVariations, int subset){
+        int [][] allVariations = this.shuffle(numberVariations);
         for(int i = 1; i <= numberVariations; i++){
-            int[] exerciseOrder = this.shuffle();
+            int[] exerciseOrder = allVariations[i-1];
             String outputFileName = "./" + outputDirectory + filename + i + ".tex";
             List<Integer> selectedElements = new ArrayList<>();
             Random random = new Random();
@@ -74,20 +90,60 @@ public class Document {
     }
 
 
-    private int[] shuffle(){
-        int[] exerciseOrder = IntStream.range(0, this.exercices.size()).toArray();
-        for(int i =0; i < exerciseOrder.length ; i ++){
-            int indexSwapA =  (int)(Math.random() * exerciseOrder.length);
-            int indexSwapB = (int)(Math.random() * exerciseOrder.length);
-            // SWAPPING EXERCISES A INDEX A AND B
-            // WE SWAP ONLY IF WE DREW TWO DIFFRENT INDEX AND IF NONE OF THEM SHOULD BE FIXED
-            if(indexSwapA != indexSwapB && !this.exercices.get(exerciseOrder[indexSwapA]).isFixed() && !this.exercices.get(exerciseOrder[indexSwapB]).isFixed()   ){
-                int tmp =  exerciseOrder[indexSwapA]; // TEMPORARILY SAVING EXERCISE A
-                exerciseOrder[indexSwapA] = exerciseOrder[indexSwapB]; // COPYING EXERCISE B INTO EXERCISE A
-                exerciseOrder[indexSwapB] = tmp; // COPYING EXERCISE A INTO EXERCISE B
+
+    private int[][] shuffle(int numberShuffleWanted){
+        logger.info("Beginning shuffling ");
+        // récupérer nombre et  position exercices qui ne peuvent pas être changés 
+        // récupérer nombre et position  exercices qui peuvent être changés
+        ArrayList<Integer> fixedExerciseArray  = new ArrayList<Integer>();
+        ArrayList<Integer> unfixedExerciseArray  = new ArrayList<Integer>();
+        int currentExercisePos = 0 ;
+        for(Exercice ex : this.exercices ){
+            if(ex.isFixed()){
+                fixedExerciseArray.add(currentExercisePos);
+            }else{
+                unfixedExerciseArray.add(currentExercisePos);
             }
+            currentExercisePos++;
         }
-        return  exerciseOrder;
+        
+        long numberShuffleAvailable = CombinatoricsUtils.factorial(unfixedExerciseArray.size());
+        if (numberShuffleAvailable < (long)numberShuffleWanted){
+            throw new RuntimeException("Number of shuffle wanted " + numberShuffleWanted+ " is greater than number of shuffle available "+numberShuffleAvailable);
+        }
+        logger.info("Number of shuffle wanted " + numberShuffleWanted+ " number of shuffle available "+numberShuffleAvailable);
+        // shuffle les exercices qui peuvent être ré-arrangés
+        
+        PermutationIterator <Integer> shuffleIterator = new PermutationIterator<Integer>(unfixedExerciseArray);
+        
+        // tableau de retour de permutations d'exercices
+        int [][] shuffledExdercicesToReturn = new int[numberShuffleWanted][this.exercices.size()];
+            
+        //merger les exercices qui peuvent être ré-arrangés et ceux qui ne le peuvent pas
+        for (int currentlyProcessedShuffle = 0 ; currentlyProcessedShuffle < numberShuffleWanted; currentlyProcessedShuffle++  ){
+        
+            // toutes les cases de la permutation actuelle sont initialement marqués comme vides
+            final int CASEVIDE=-1;
+            for(int fillingPos= 0; fillingPos < this.exercices.size();fillingPos++)shuffledExdercicesToReturn[currentlyProcessedShuffle][fillingPos]=CASEVIDE;
+
+            //on met les exercices qui ne peuvent pas être réordonnées
+            for (int fixedExercisePos: fixedExerciseArray) shuffledExdercicesToReturn[currentlyProcessedShuffle][fixedExercisePos]=fixedExercisePos;
+            
+            //on met les exercices qui peuvent être réordonnées dans les cases restantes
+            
+            logger.debug(currentlyProcessedShuffle);
+            int[] aShuffle  = shuffleIterator.next(); // on récupère une permutation d'exercices non fixés
+            
+            int exercisePosition = 0 ; // position ou le prochain exercice va être écrit  
+            for (int posShuffledExercise:aShuffle){
+                // tant que l'on se trouve sur une case d'exercice fixé
+                while (shuffledExdercicesToReturn[currentlyProcessedShuffle][exercisePosition]!=CASEVIDE)exercisePosition ++;
+                // ici on se trouve sur une case vide 
+                    shuffledExdercicesToReturn[currentlyProcessedShuffle][exercisePosition]=unfixedExerciseArray.get(posShuffledExercise) ;
+            }    
+        }
+        logger.info("returning result of Shuffling ");
+        return shuffledExdercicesToReturn;
     }
 
     private int[] shuffle(int[] tab){

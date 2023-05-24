@@ -10,7 +10,7 @@ public class PlainContentBlock implements ContentBlock{
 
     @Override
     public String toString(){
-        return "Plain \n\n" ;//+ content + "\n\n";
+        return content;
     }
 
 }

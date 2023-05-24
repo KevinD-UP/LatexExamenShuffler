@@ -14,7 +14,19 @@ public class ParameterizedScope {
 
     private HashMap<String,Variable> variables;
 
-    public ParameterizedScope(String scopeDeclaration){
+    private ParameterizedDocument parameterizedDocument;
+
+
+    public String getValueForName(char c){
+        return  this.variables.get(String.valueOf(c)).getCurrentValue();
+    }
+    public boolean isVariable(char c){
+        String name = String.valueOf(c);
+        return this.variables.containsKey(name);
+    }
+
+    public ParameterizedScope(String scopeDeclaration, ParameterizedDocument parameterizedDocument){
+        this.parameterizedDocument = parameterizedDocument;
         // PUTS EVERY VARIABLE IN AN HASHMAP WHERE KEY IS VARIABLE NAME
         ArrayList<Variable> variableArrayList = parseScopeDeclaration(scopeDeclaration);
         this.variables = new HashMap<>();
@@ -23,7 +35,8 @@ public class ParameterizedScope {
         }
     }
 
-    public ParameterizedScope(String scopeDeclaration, ParameterizedScope scope){
+    public ParameterizedScope(String scopeDeclaration, ParameterizedScope scope, ParameterizedDocument parameterizedDocument){
+        this.parameterizedDocument = parameterizedDocument;
         // COPIES SCOPE THEN ADDS NEWLY DECLARED VARIABLE
         ArrayList<Variable> variableArrayList = parseScopeDeclaration(scopeDeclaration);
         this.variables = new HashMap<>(scope.variables);
@@ -65,7 +78,9 @@ public class ParameterizedScope {
         ArrayList<String> allowedValuesArrayList = new ArrayList<>(Arrays.asList(allowedValues)); // Convert to arrayList
         allowedValuesArrayList.add(name); // for now it's own name is an allowed value
 
-        return new Variable(name,allowedValuesArrayList);
+        Variable variable = new Variable(name,allowedValuesArrayList);
+        this.parameterizedDocument.registerVariable(variable);
+        return variable ;
     }
 
     @Override

@@ -18,10 +18,31 @@ public class ParameterizedDocument {
     public static final String ENDVAR = "%endvar";
     public static final String END_DEC = "%end dec";
 
+    private ArrayList<Variable> allVariables= new ArrayList<>();
+
     private ArrayList<ContentBlock> contentBlocks = new ArrayList<>();
 
     public ParameterizedDocument(String inputPath){
         parseVariable(inputPath);
+    }
+
+    public String generateParameterizedDocument(){
+        this.setAllVariables();
+        StringBuilder stringBuilder = new StringBuilder();
+        for(ContentBlock contentBlock : this.contentBlocks){
+            stringBuilder.append(contentBlock.toString());
+        }
+        return stringBuilder.toString();
+    }
+
+    public void registerVariable(Variable v){
+        this.allVariables.add(v);
+    }
+
+    public void setAllVariables(){
+        for(Variable variable : this.allVariables){
+            variable.pickValue();
+        }
     }
 
     public String toString(){
@@ -29,6 +50,7 @@ public class ParameterizedDocument {
         for (ContentBlock contentBlock : contentBlocks){
             out.append(contentBlock.toString());
         }
+
         return  out.toString();
     }
 
@@ -76,9 +98,9 @@ public class ParameterizedDocument {
                             ParameterizedScope parameterizedScope;
                             if(currentScopeDepth != -1){
                                 // SCOPE DEPTH IS NOT -1, WE USE CURRENT DEPTH SCOPE AND DECLARATION TO CREATE SCOPE
-                                 parameterizedScope = new ParameterizedScope(currentScopeDeclaration.toString(), scopes.get(currentScopeDepth));
+                                 parameterizedScope = new ParameterizedScope(currentScopeDeclaration.toString(), scopes.get(currentScopeDepth), this);
                             } else{
-                                parameterizedScope = new ParameterizedScope(currentScopeDeclaration.toString());
+                                parameterizedScope = new ParameterizedScope(currentScopeDeclaration.toString(),this);
                             }
                             currentScopeDeclaration = new StringBuilder();
                             lineNum +=2; // %VAR AND %END DEC

@@ -2,9 +2,6 @@ package org.genial.ark.domain;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
@@ -32,25 +29,35 @@ public class Document {
     public static final String COMMENT = "%";
     public static final String FIXED = "fixed";
 
-    private final ArrayList<Exercice> exercise = new ArrayList<>();
+    private ArrayList<Exercice> exercices = new ArrayList<>();
 
-
-    private String beforeExerciseContent = "";
+    private String inputPath;
+    private String beforeExercicesContent = "";
 
     private String afterExercisesContent = "";
 
     public Document(String inputPath){
-        ParameterizedDocument parameterizedDocument = new ParameterizedDocument(inputPath);
-        System.out.println(parameterizedDocument.toString());
-        //parseToExercises(inputPath);
+        this.inputPath = inputPath;
     }
 
     public int[][] generateVariations(String outputDirectory, String filename, int numberVariations){
+        int nbVarVariations = Math.max(1,numberVariations / 2);
+        ParameterizedDocument parameterizedDocument = new ParameterizedDocument(inputPath);
+
+        int nbVarvariationsDone = 1;
+        this.parseToExercises(parameterizedDocument.generateParameterizedDocument());
+
         int [][] allVariations = this.shuffle(numberVariations);
         int n = min(numberVariations, allVariations.length);
         for(int i = 1; i <= n; i++){
             int[] exerciseOrder = allVariations[i - 1];
             String outputFileName = "./" + outputDirectory + filename + i + ".tex";
+            if(i>= nbVarvariationsDone){
+                parseToExercises(parameterizedDocument.generateParameterizedDocument());
+                if(nbVarvariationsDone <= nbVarVariations){
+                    nbVarvariationsDone +=1;
+                }
+            }
             dumpToTex(exerciseOrder, outputFileName);
         }
         return allVariations;
@@ -129,8 +136,8 @@ public class Document {
         logger.info("Beginning shuffling ");
         // récupérer nombre et  position exercices qui ne peuvent pas être changés 
         // récupérer nombre et position  exercices qui peuvent être changés
-        ArrayList<Integer> fixedExerciseArray  = new ArrayList<Integer>();
-        ArrayList<Integer> unfixedExerciseArray  = new ArrayList<Integer>();
+        ArrayList<Integer> fixedExerciseArray  = new ArrayList<>();
+        ArrayList<Integer> unfixedExerciseArray  = new ArrayList<>();
         int currentExercisePos = 0 ;
         for(Exercice ex : this.exercise){
             if(ex.isFixed()){
@@ -263,69 +270,65 @@ public class Document {
 
 
 
-    private void parseToExercises(String inputPath) {
+    private void parseToExercises(String content) {
+        this.exercices = new ArrayList<>();
+        this.beforeExercicesContent = "";
+        this.afterExercicesContent = "";
         logger.info("Parsing input file");
-        try {
-            //the file to be opened for reading
-            FileInputStream fis=new FileInputStream(inputPath);
-            Scanner sc=new Scanner(fis);    //file to be scanned
-            StringBuilder currentExerciceContent = new StringBuilder();
-            int state = 0;
-            int lineNum =0; // index of the line currently being read
-            int exerciseCount = 1; // current exercise for logging purposes
+        Scanner sc=new Scanner(content);    //file to be scanned
+        StringBuilder currentExerciceContent = new StringBuilder();
+        int state = 0;
+        int lineNum =0; // index of the line currently being read
+        int exerciseCount = 1; // current exercise for logging purposes
             /*
             state 0 : started parsing file, initial configuration before exercices
             state 1 : has seen a \begin{exo} line but no \end{exo} line yet
             state 2 : has seen a \end{exo} line last at the previous iteration of the loop
              */
-            while(sc.hasNextLine())
-            {
-                String currentLine = sc.nextLine();
-                //BEGIN EXO
-                if(currentLine.trim().startsWith(BEGIN_EXO)){
-                    if(state == 2 || state == 0){
-                        state = 1; // CHANGING TO STATE 1 BECAUSE WE ARE INSIDE AN EXERCISE
-                        currentExerciceContent.append(currentLine).append("\n");
-                    } else{
-                        logger.error("Error, malformed document, encountered " + BEGIN_EXO + " at line " + lineNum + " but an exercise was already opened and not closed");
-                        System.exit(-1);
-                    }
+        while(sc.hasNextLine())
+        {
+            String currentLine = sc.nextLine();
+            //BEGIN EXO
+            if(currentLine.trim().startsWith(BEGIN_EXO)){
+                if(state == 2 || state == 0){
+                    state = 1; // CHANGING TO STATE 1 BECAUSE WE ARE INSIDE AN EXERCISE
+                    currentExerciceContent.append(currentLine).append("\n");
+                } else{
+                    logger.error("Error, malformed document, encountered " + BEGIN_EXO + " at line " + lineNum + " but an exercise was already opened and not closed");
+                    System.exit(-1);
                 }
-
-                //END EXO
-                else if(currentLine.trim().equals(END_EXO)){
-                    if(state == 1){
-                        state = 2; // CHANGING TO STATE 2 BECAUSE WE ARE NOT INSIDE AN EXERCISE BUT WE READ AT LEAST ONE
-                        currentExerciceContent.append(currentLine).append("\n");
-                        logger.info("Creating exercise " + exerciseCount);
-                        exerciseCount += 1;
-                        Exercice exercice = ExerciseFactory.exerciceFactory(currentExerciceContent.toString());
-                        this.exercise.add(exercice); // REGISTERING EXERCISE INSIDE THE DOCUMENT
-                        currentExerciceContent = new StringBuilder(); // RESET FOR NEXT EXERCISE
-                    } else {
-                        logger.error("Error, malformed document, encountered " + END_EXO + " at line " + lineNum + " but no exercise was open");
-                        System.exit(-1);
-                    }
-                }
-
-                // ANY OTHER LINE
-                else{
-                    // WE ARE INSIDE AN EXERCISE
-                    if(state == 1){
-                        currentExerciceContent.append(currentLine).append("\n");
-                    } else if (state == 0){ // WE HAVE NOT ENCOUNTERED AN EXERCISE YET
-                        this.beforeExerciseContent += currentLine + "\n";
-                    } else if(state == 2){ // WE HAVE ENCOUNTERED AT LEAST AN EXERCISE BUT ARE NOT INSIDE OF ONE
-                        this.afterExercisesContent += currentLine + "\n";
-                    }
-                }
-                lineNum += 1;
             }
-            sc.close();
-        } catch(IOException e) {
-            logger.error("Exception while parsing file " + inputPath + " : " + e.getMessage());
-            System.exit(-1);
+
+            //END EXO
+            else if(currentLine.trim().equals(END_EXO)){
+                if(state == 1){
+                    state = 2; // CHANGING TO STATE 2 BECAUSE WE ARE NOT INSIDE AN EXERCISE BUT WE READ AT LEAST ONE
+                    currentExerciceContent.append(currentLine).append("\n");
+                    logger.info("Creating exercise " + exerciseCount);
+                    exerciseCount += 1;
+                    Exercice exercice = ExerciseFactory.exerciceFactory(currentExerciceContent.toString());
+                    this.exercices.add(exercice); // REGISTERING EXERCISE INSIDE THE DOCUMENT
+                    currentExerciceContent = new StringBuilder(); // RESET FOR NEXT EXERCISE
+                } else {
+                    logger.error("Error, malformed document, encountered " + END_EXO + " at line " + lineNum + " but no exercise was open");
+                    System.exit(-1);
+                }
+            }
+
+            // ANY OTHER LINE
+            else{
+                // WE ARE INSIDE AN EXERCISE
+                if(state == 1){
+                    currentExerciceContent.append(currentLine).append("\n");
+                } else if (state == 0){ // WE HAVE NOT ENCOUNTERED AN EXERCISE YET
+                    this.beforeExercicesContent += currentLine + "\n";
+                } else if(state == 2){ // WE HAVE ENCOUNTERED AT LEAST AN EXERCISE BUT ARE NOT INSIDE OF ONE
+                    this.afterExercicesContent += currentLine + "\n";
+                }
+            }
+            lineNum += 1;
         }
+        sc.close();
     }
 
 

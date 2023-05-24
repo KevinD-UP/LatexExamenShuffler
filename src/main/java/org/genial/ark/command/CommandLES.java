@@ -83,6 +83,10 @@ public class CommandLES implements Runnable{
         if(subset != 0){
             variations = document.generateVariationsSubset(outputDir, filename, numberVariations, subset);
         } else if(subsetRange != null) {
+            if(subsetRange[0] > subsetRange[1]){
+                logger.error("Number of exercise greater than range");
+                System.exit(1);
+            }
             variations = document.generateVariationsSubsetRange(outputDir, filename, numberVariations, subsetRange[0], subsetRange[1]);
         } else {
             variations = document.generateVariations(outputDir, filename, numberVariations);

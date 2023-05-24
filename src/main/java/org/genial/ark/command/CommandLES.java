@@ -68,12 +68,13 @@ public class CommandLES implements Runnable{
         }
         Document document = new Document(inputPath);
         LatexToPdfConverter converter = new LatexToPdfConverter(compiler);
+        int [][] variations;
         if(subset != 0){
-            document.generateVariationsSubset(outputDir, filename, numberVariations, subset);
+            variations = document.generateVariationsSubset(outputDir, filename, numberVariations, subset);
         } else {
-            document.generateVariations(outputDir, filename, numberVariations);
+            variations = document.generateVariations(outputDir, filename, numberVariations);
         }
-        for(int i = 0; i < numberVariations; i++) {
+        for(int i = 0; i < variations.length; i++) {
             for(int j = 0; j < 2; j++) {
                 converter.convert(outputDir + filename + (i+1) + ".tex", outputDir);
             }

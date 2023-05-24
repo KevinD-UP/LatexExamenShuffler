@@ -11,9 +11,10 @@ public class ParametrizedContentBlock implements ContentBlock{
         this.content = content;
     }
 
+
     @Override
     public String toString(){
-        return "Parameterized \n\n" ;//+ content + "\n\n";
+        return "Parameterized \n" + this.scope.toString() +"\n\n" ;//+ content + "\n\n";
     }
 
 

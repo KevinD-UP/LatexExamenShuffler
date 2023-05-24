@@ -53,11 +53,9 @@ public class ParameterizedDocument {
             while(sc.hasNextLine())
             {
                 String currentLine = sc.nextLine();
-                if(currentLine.startsWith("%")){
-                    System.out.println(currentLine);
-                }
                 // %var
                 if(currentLine.trim().equals(VAR)){
+                    state = 1;
                     ContentBlock contentBlock;
                     // FINISHING CURRENT BLOCK
                     if(currentScopeDepth == -1){ // NOT IN A SCOPE
@@ -96,8 +94,7 @@ public class ParameterizedDocument {
                 }
                 // %endvar
                 else if(currentLine.trim().equals(ENDVAR)){
-
-                    if(currentScopeDepth == -1){
+                    if(currentScopeDepth == -1 || state == 0){
                         logger.error("Malformed document, encountered " + ENDVAR + " at line "  + lineNum + " but not var scope was opened");
                         System.exit(-1);
                     }
@@ -107,10 +104,7 @@ public class ParameterizedDocument {
                     currentContent = new StringBuilder();
                     scopes.remove(currentScopeDepth);
                     currentScopeDepth -=1;
-                    // JE SORS D UN SCOPE
-                    // LE texte jusqua présent dépend de current scope depth => créer et ajouter
-                    // on delete cet element du tableau de scope
-                    // scope depth -1
+                    state = 2;
                 }
 
                 else{
@@ -120,6 +114,19 @@ public class ParameterizedDocument {
                 lineNum += 1;
             }
             sc.close();
+
+            if(state == 1){
+                logger.error("Malformed document, a var scope was opened but not closed by the end of the document");
+                System.exit(-1);
+            } else{
+                ContentBlock contentBlock;
+                if(currentScopeDepth == -1){
+                    contentBlock = new PlainContentBlock(currentContent.toString());
+                } else{
+                    contentBlock = new ParametrizedContentBlock(currentContent.toString(), scopes.get(currentScopeDepth));
+                }
+                contentBlocks.add(contentBlock);
+            }
         } catch(IOException e) {
             logger.error("Exception while parsing file " + inputPath + " : " + e.getMessage());
             System.exit(-1);

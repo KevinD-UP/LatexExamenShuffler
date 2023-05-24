@@ -57,6 +57,13 @@ public class CommandLES implements Runnable{
     private int subset;
 
     /**
+     * subset.
+     */
+    @CommandLine.Option(names = {"--subset-range"},
+            description = "takes two arguments n & m: n the number of exercise and m the range", arity = "2")
+    private int[] subsetRange;
+
+    /**
      * Runs the command.
      */
     @Override
@@ -69,8 +76,14 @@ public class CommandLES implements Runnable{
         Document document = new Document(inputPath);
         LatexToPdfConverter converter = new LatexToPdfConverter(compiler);
         int [][] variations;
+        if(subset != 0 && subsetRange != null) {
+            logger.error("incompatibles options");
+            System.exit(-1);
+        }
         if(subset != 0){
             variations = document.generateVariationsSubset(outputDir, filename, numberVariations, subset);
+        } else if(subsetRange != null) {
+            variations = document.generateVariationsSubsetRange(outputDir, filename, numberVariations, subsetRange[0], subsetRange[1]);
         } else {
             variations = document.generateVariations(outputDir, filename, numberVariations);
         }

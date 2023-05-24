@@ -9,6 +9,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{stmaryrd}
+\usepackage{luacode}
 
 % format standard, centré
  \setlength{\oddsidemargin}{2mm}
@@ -131,5 +132,17 @@ Remplissez le tableau suivant ($0$ ou $1$ dans les trois premières colonnes et 
     \rule[-0.4cm]{0mm}{13cm}
    }
 \end{exo}
+
+\begin{luacode*}
+  -- Définition de deux variables
+  local a = 5
+  local b = 3
+
+  -- Calcul de la somme
+  local sum = a + b
+
+  -- Affichage du résultat
+  tex.print(string.format("La somme de %d et %d est égale à %d.", a, b, sum))
+\end{luacode*}
 
 \end{document}

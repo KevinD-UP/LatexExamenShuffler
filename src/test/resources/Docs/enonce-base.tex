@@ -43,7 +43,7 @@ def ....
 #
 \end{verbatim}
 \end{itemize}
-
+%subset 1
 \begin{exo}
     Écrire une fonction {\tt question1a} qui prend comme argument une liste et
 qui renvoie la somme du 3ème et du dernier élément. Par exemple
@@ -85,7 +85,9 @@ qui renvoie le produit du 4ème et du dernier élément. Par exemple
 \verb+question1f([1,2,3,4,5,6,7,8,9,10])+ renvoie 40.
 On suppose que la liste est suffisamment longue.
 \end{exo}
+%endsubset
 \vspace*{-2ex}
+%subset 1
 \begin{exo}
     Écrire une fonction {\tt question2a} qui prend comme argument une liste d'entiers positifs et qui renvoie la liste des entiers de la liste d'entrée qui sont
 supérieurs ou égaux à 5. Par exemple pour \verb+[10,9,2,3,4,5,6,7,8]+
@@ -145,7 +147,9 @@ on obtient \verb+[2,3,4]+.
 inférieurs ou égaux à 8. Par exemple pour \verb+[10,9,2,3,4,5,6,7,8]+
 on obtient \verb+[2,3,4,5,6,7,8]+.
 \end{exo}
+%endsubset
 \vspace*{-2ex}
+%subset 1
 \begin{exo}
     Écrire une fonction {\tt question3a} qui prend comme argument une chaîne de
 caractères composée de chiffres
@@ -193,7 +197,9 @@ et qui renvoie une liste de tous ses chiffres divisibles par $4$
 auxquels on a soustrait $2$. Par
 exemple pour \verb+"0124567234689"+ on obtient \verb+[-2,2,2,6]+.
 \end{exo}
+%endsubset
 \vspace*{-2ex}
+%subset 1
 \begin{exo}
     Écrire une fonction {\tt question4a} qui prend en argument une liste de listes d'entiers et qui renvoie une liste de toutes les listes
 de longueur inférieure ou égale à 2 où tous les éléments ont été multipliés par 2. Par exemple pour \verb+[[1,2],[3,4,5],[2,3]]+ on obtient \verb+[[2,4],[4,6]]+.
@@ -223,7 +229,9 @@ de longueur inférieure ou égale à 3 où tous les éléments ont été multipl
     Écrire une fonction {\tt question4f} qui prend en argument une liste de listes d'entiers et qui renvoie une liste de toutes les listes
 de longueur inférieure ou égale à 3 où tous les éléments ont été multipliés par 2. Par exemple pour \verb+[[1,2],[2,3,4,5],[3,4,5]]+ on obtient \verb+[[2,4],[6,8,10]]+.
 \end{exo}
+%endsubset
 \vspace*{-2ex}
+%subset 1
 \begin{exo}
     Écrire une fonction {\tt question5a} qui prend en argument le nom d'un fichier et qui retourne le nombre de fois où le fichier contient la lettre 'a' ou la
 lettre 'b'.
@@ -289,7 +297,9 @@ qfg  uiuuaaabbeecccd dedeee
 \end{verbatim} 
 \verb+question5f("test5")+ retourne \verb+12+.
 \end{exo}
+%endsubset
 \vspace*{-2ex}
+%subset 1
 \begin{exo}
     Écrire une fonction \verb+question6a+ qui prend en argument le nom d'un fichier
 et retourne un dictionnaire de mots où chaque clé est une lettre de
@@ -351,7 +361,9 @@ pierre penelope bonjour bazar truc
 on obtient \verb+{'p': {'pierre', 'penelope'}, 't': {'truc'}, 'b': {'bazar', 'bonjour'}}+\\
 Sur Moodle vous trouverez un fichier long \verb+motsquestion6d+ pour tester.
 \end{exo}
+%endsubset
 \vspace*{-2ex}
+%subset 1
 \begin{exo}
     Écrire une fonction {\tt question7a}
 qui prend en argument une chaîne de caractères et qui renvoie
@@ -391,7 +403,9 @@ s'il n'y en a pas.
 Par exemple pour \verb+"abebgeayuaieebbioaa"+ on obtient
 \verb+'eayuai'+. Utilisez les expressions régulières.
 \end{exo}
+%endsubset
 \vspace*{-2ex}
+%subset 1
 \begin{exo}
     Écrire une fonction {\tt question8a} qui prend en argument un ensemble
 de chaînes de caractères et qui renvoie une liste de toutes les chaînes
@@ -431,7 +445,9 @@ Par exemple, pour \verb+["1a24bbb24a24","00000","23032311230023","111111"]+
 on obtient \verb+{'111111','23032311230023'}+.
 Utilisez les expressions régulières.
 \end{exo}
+%endsubset
 \vspace*{-2ex}
+%subset 1
 \begin{exo}
     La RATP fournit des données sur la fréquentation annuelle des stations de son réseau. Le fichier CSV (sur Moodle: \verb+ratp.csv+) a le format suivant\\
 \verb+Réseau;Station;Trafic;Correspondance_1;Corr_2;Corr_3;Corr_4;Corr_5;Ville;Arr. pour Paris+\\
@@ -491,7 +507,9 @@ et retourne la liste (sous forme de liste python) des lignes (chaînes
 de caractères) du fichier (sans le \verb+\n+)
 concernant les stations de {\bf RER à l'extérieur de Paris}.
 \end{exo}
+%endsubset
 \vspace*{-2ex}
+%subset 1
 \begin{exo}
     Écrire une fonction {\tt question10a} qui prend en entrée un nom de fichier CSV
 du format donné ci-dessus
@@ -507,7 +525,9 @@ et qui renvoie une liste d'association (dictionnaire) dont les clefs sont
 des paires (Station,Réseau) et les valeurs leur fréquentation.
 La valeur doit être un entier.
 \end{exo}
+%endsubset
 \vspace*{-2ex}
+%subset 1
 \begin{exo}
     Écrire une fonction {\tt question11a} qui prend en entrée un nom de fichier CSV
 du format donné ci-dessus et qui renvoie un dictionnaire dont les clefs sont
@@ -521,5 +541,6 @@ du format donné ci-dessus et qui renvoie un dictionnaire dont les clefs sont
 les lignes de Métro
 avec comme valeur la station la moins fréquentée sur cette ligne.
 \end{exo}
+%endsubset
 \vspace*{-2ex}
 \end{document}

@@ -74,9 +74,17 @@ public class Document {
     }
 
     public void generateVariationsDomain(String outputDirectory, String filename, int numberVariations) {
+        int nbVarVariations = Math.max(1,numberVariations / 2);
         ParameterizedDocument parameterizedDocument = new ParameterizedDocument(inputPath);
         this.parseToExercises(parameterizedDocument.generateParameterizedDocument());
+        int nbVarvariationsDone = 1;
         for(int i = 1; i <= numberVariations; i++) {
+            if(i >= nbVarvariationsDone){
+                parseToExercises(parameterizedDocument.generateParameterizedDocument());
+                if(nbVarvariationsDone <= nbVarVariations){
+                    nbVarvariationsDone +=1;
+                }
+            }
             String outputFileName = "./" + outputDirectory + filename + i + ".tex";
             int[] arr = new int [this.documentBlocks.size()];
             Arrays.setAll(arr, j -> j);
@@ -147,59 +155,6 @@ public class Document {
         return shuffledExercicesToReturn;
     }
 
-    private int[][] shuffle(int[] tab, int numberShuffleWanted){
-        int[] exerciseOrder = tab.clone();
-        logger.debug("Beginning shuffling ");
-        // récupérer nombre et  position exercices qui ne peuvent pas être changés
-        // récupérer nombre et position  exercices qui peuvent être changés
-        ArrayList<Integer> fixedExerciseArray  = new ArrayList<Integer>();
-        ArrayList<Integer> unfixedExerciseArray  = new ArrayList<Integer>();
-        for(int exId: exerciseOrder){
-            if(this.exercises.get(exId).isFixed()){
-                fixedExerciseArray.add(exId);
-            }else{
-                unfixedExerciseArray.add(exId);
-            }
-        }
-
-        BigInteger numberShuffleAvailable = factorial(unfixedExerciseArray.size());
-        logger.info("Number of shuffle wanted " + numberShuffleWanted+ " number of shuffle available " + numberShuffleAvailable);
-        if (numberShuffleAvailable.compareTo(BigInteger.valueOf(numberShuffleWanted)) < 0){
-            logger.warn("Number of shuffle wanted " + numberShuffleWanted + " is greater than number of shuffle available " + numberShuffleAvailable + ", so every permutation available will be generated");
-            numberShuffleWanted = numberShuffleAvailable.intValue();
-        }
-        // shuffle les exercices qui peuvent être ré-arrangés
-
-        PermutationIterator <Integer> shuffleIterator = new PermutationIterator<Integer>(unfixedExerciseArray);
-
-        // tableau de retour de permutations d'exercices
-        int [][] shuffledExercicesToReturn = new int[numberShuffleWanted][exerciseOrder.length];
-
-        //merger les exercices qui peuvent être ré-arrangés et ceux qui ne le peuvent pas
-        for (int currentlyProcessedShuffle = 0 ; currentlyProcessedShuffle < numberShuffleWanted; currentlyProcessedShuffle++  ){
-
-            // toutes les cases de la permutation actuelle sont initialement marqués comme vides
-            final int CASEVIDE=-1;
-            for(int fillingPos= 0; fillingPos < exerciseOrder.length; fillingPos++)shuffledExercicesToReturn[currentlyProcessedShuffle][fillingPos]=CASEVIDE;
-
-            //on met les exercices qui ne peuvent pas être réordonnées
-            for (int fixedExercisePos: fixedExerciseArray) shuffledExercicesToReturn[currentlyProcessedShuffle][fixedExercisePos]=fixedExercisePos;
-
-            //on met les exercices qui peuvent être réordonnées dans les cases restantes
-            int[] aShuffle  = shuffleIterator.next().stream().mapToInt(Integer::intValue).toArray(); // on récupère une permutation d'exercices non fixés
-
-            int exercisePosition = 0 ; // position ou le prochain exercice va être écrit
-            for (int exercise: aShuffle){
-                // tant que l'on se trouve sur une case d'exercice fixé
-                while (shuffledExercicesToReturn[currentlyProcessedShuffle][exercisePosition] != CASEVIDE) exercisePosition++;
-                // ici on se trouve sur une case vide
-                shuffledExercicesToReturn[currentlyProcessedShuffle][exercisePosition]=exercise ;
-            }
-        }
-        return shuffledExercicesToReturn;
-    }
-
-
     private void dumpToTex(int[] exercisesPermutation, String outputFileName) {
         try {
             Path of = Path.of(outputFileName);
@@ -219,6 +174,7 @@ public class Document {
 
     private void parseToExercises(String content) {
         this.exercises = new ArrayList<>();
+        this.documentBlocks = new ArrayList<>();
         this.beforeExercisesContent = "";
         this.afterExercisesContent = "";
         logger.info("Parsing input file");

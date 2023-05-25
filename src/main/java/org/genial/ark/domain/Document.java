@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import org.apache.commons.collections4.iterators.PermutationIterator;
-import org.genial.ark.domain.parameterized.ContentBlock;
 import org.genial.ark.domain.parameterized.ParameterizedDocument;
 
 import static java.lang.Math.min;
@@ -59,7 +58,7 @@ public class Document {
         for(int i = 1; i <= n; i++){
             int[] exerciseOrder = allVariations[i - 1];
             String outputFileName = "./" + outputDirectory + filename + i + ".tex";
-            if(i>= nbVarvariationsDone){
+            if(i >= nbVarvariationsDone){
                 parseToExercises(parameterizedDocument.generateParameterizedDocument());
                 if(nbVarvariationsDone <= nbVarVariations){
                     nbVarvariationsDone +=1;
@@ -70,69 +69,16 @@ public class Document {
         return allVariations;
     }
 
-    public int[][] generateVariationsSubset(String outputDirectory, String filename, int numberVariations, int subset){
-
+    public void generateVariationsDomain(String outputDirectory, String filename, int numberVariations) {
         ParameterizedDocument parameterizedDocument = new ParameterizedDocument(inputPath);
-        parseToExercises(parameterizedDocument.generateParameterizedDocument());
-        List<Integer> selectedElements = new ArrayList<>();
-        Random random = new Random();
-
-        for (int i = 0; i < subset; i++) {
-            int randomIndex;
-            int selectedElement;
-
-            do {
-                randomIndex = random.nextInt(this.exercises.size());
-                selectedElement = randomIndex;
-            } while (selectedElements.contains(selectedElement));
-
-            selectedElements.add(selectedElement);
-        }
-
-        int[] intArray = selectedElements.stream().mapToInt(Integer::intValue).toArray();
-        int[][] allVariations = this.shuffle(intArray, numberVariations);
-        int n = min(numberVariations, allVariations.length);
-        for(int i = 1; i <= n; i++){
-            int[] exerciseOrder = allVariations[i - 1];
+        this.parseToExercises(parameterizedDocument.generateParameterizedDocument());
+        for(int i = 1; i <= numberVariations; i++) {
             String outputFileName = "./" + outputDirectory + filename + i + ".tex";
-            dumpToTex(exerciseOrder, outputFileName);
+            int[] arr = new int [this.documentBlocks.size()];
+            Arrays.setAll(arr, j -> j);
+            dumpToTex(arr, outputFileName);
         }
-        return allVariations;
     }
-
-    public int[][] generateVariationsSubsetRange(String outputDirectory, String filename, int numberVariations, int nbExo, int range){
-        ParameterizedDocument parameterizedDocument = new ParameterizedDocument(inputPath);
-        parseToExercises(parameterizedDocument.generateParameterizedDocument());
-        List<Integer> selectedElements = new ArrayList<>();
-        Random random = new Random();
-
-        for (int i = 0; i < this.exercises.size(); i += range) {
-            for(int j = 0; j < nbExo; j++){
-                int randomIndex;
-                int selectedElement;
-
-                do {
-                    randomIndex = random.nextInt(i, min(this.exercises.size(), i + range));
-                    selectedElement = randomIndex;
-                } while (selectedElements.contains(selectedElement));
-
-                selectedElements.add(selectedElement);
-            }
-        }
-
-        int[] intArray = selectedElements.stream().mapToInt(Integer::intValue).toArray();
-
-        int[][] allVariations = this.shuffle(intArray, numberVariations);
-        int m = min(numberVariations, allVariations.length);
-        for(int i = 1; i <= m; i++){
-            int[] exerciseOrder = allVariations[i - 1];
-            String outputFileName = "./" + outputDirectory + filename + i + ".tex";
-            dumpToTex(exerciseOrder, outputFileName);
-        }
-        return allVariations;
-    }
-
-
 
     private BigInteger factorial(int n) {
         BigInteger result = BigInteger.ONE;
@@ -324,7 +270,7 @@ public class Document {
                 if(subsetState == 0 || subsetState == 2){
                     logger.error("Malformed document, encountered " + COMMENT + ENDSUBSET + " at line " + lineNum + " but no subset block was opened");
                     System.exit(-1);
-                } else if (subsetState == 2){
+                } else if (subsetState == 1){
                     if(state == 1){
                         logger.error("Malformed document, encountered " + COMMENT + SUBSET + " at line " + lineNum + " but a subset block can't start within an exercise block");
                         System.exit(-1);

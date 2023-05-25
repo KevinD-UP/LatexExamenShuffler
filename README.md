@@ -28,7 +28,7 @@ Vous pouvez également préciser avec l'option `--output-filename outputFilename
 
 ### Exercices 
 
-- Pour être accepté en entrée, un document .tex doit définir 
+- Pour être accepté en entrée, un document .tex doit définir à minima 
 
 ```latex
 \newtheorem{exi}{}
@@ -65,9 +65,32 @@ ou un bloc
 
 Comme étant un bloc de questions dont on souhaite changer l'ordre en ajoutant `%qb` à la ligne précédant le début du bloc et `%endqb` à la ligne suivant la fin du bloc. L'ordre des items à l'interieur du bloc sera alors mélangé. 
 
+
+### Variables
+Pour déclarer des noms de variables qui peuvent être modifiés aléatoirement par l'utilitaire, il faut
+tout d'abord signaler un espace de nommage avec
+
+%var
+%endvar
+
+Ces espaces de nommage peuvent être imbriqués.
+
+Ensuite une variable et ses noms de remplacements se signalent,
+au début d'un espace de nommage, de la manière suivante:
+
+nomdansleLatex : nomderemplacment1 ; nomderemplacement2 ; ...
+
+plusieurs variables se signalent une ligne à la fois :
+
+nomdansleLatex : nomderemplacment1 ; nomderemplacement2 ; ...
+autrenomdansleLatex : autrenomderemplacement1 ; autrenomderemplacement2 ; ...
+
+
+
 ### Compilation
 
-- Il est possible de choisir le compilateur LaTeX que l'on souhaite utiliser avec l'option `--compiler nom-du-compilateur`. Par défaut le compilateur utilisé est pdfLaTeX. Les compilateurs supportés sont : pdfLaTeX, LuaLaTeX ou XeLaTeX
+- Il est possible de choisir le compilateur LaTeX que l'on souhaite utiliser avec l'option `--compiler nom-du-compilateur`. Par défaut le compilateur utilisé est pdfLaTeX. 
+Les compilateurs supportés sont : pdfLaTeX, LuaLaTeX ou XeLaTeX
 
 ## Auteurs
 

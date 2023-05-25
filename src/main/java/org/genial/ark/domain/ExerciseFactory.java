@@ -24,7 +24,7 @@ public class ExerciseFactory {
     }
 
     private static Exercice parse(String content){
-        logger.info("Parsing exercise");
+        logger.debug("Parsing exercise");
         Scanner scanner = new Scanner(content);
         boolean isFixed =false;
 
@@ -84,13 +84,13 @@ public class ExerciseFactory {
         }
         scanner.close();
         if(state ==0){
-            logger.info("Exercise successfully parsed");
+            logger.debug("Exercise successfully parsed");
             return new PlainExercice(contentCurrentBlock.toString(), isFixed);
         } else if ( state == 1) {
             logger.error("Malformed exercise, a question block was opened but not closed by the end of the exercise");
             System.exit(-1);
         } else if( state == 2 ){
-            logger.info("Exercise successfully parsed");
+            logger.debug("Exercise successfully parsed");
             return  new QuestionsExercise(contentExerciseArrayList,isFixed);
         }
 

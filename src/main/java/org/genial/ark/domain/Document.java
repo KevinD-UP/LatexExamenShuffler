@@ -145,7 +145,7 @@ public class Document {
     }
 
     private int[][] shuffle(int numberShuffleWanted){
-        logger.info("Beginning shuffling ");
+        logger.debug("Beginning shuffling ");
         // récupérer nombre et  position exercices qui ne peuvent pas être changés 
         // récupérer nombre et position  exercices qui peuvent être changés
         ArrayList<Integer> fixedExerciseArray  = new ArrayList<>();
@@ -199,7 +199,7 @@ public class Document {
 
     private int[][] shuffle(int[] tab, int numberShuffleWanted){
         int[] exerciseOrder = tab.clone();
-        logger.info("Beginning shuffling ");
+        logger.debug("Beginning shuffling ");
         // récupérer nombre et  position exercices qui ne peuvent pas être changés
         // récupérer nombre et position  exercices qui peuvent être changés
         ArrayList<Integer> fixedExerciseArray  = new ArrayList<Integer>();
@@ -354,7 +354,7 @@ public class Document {
                 if(state == 1){
                     state = 2; // CHANGING TO STATE 2 BECAUSE WE ARE NOT INSIDE AN EXERCISE BUT WE READ AT LEAST ONE
                     currentExerciceContent.append(currentLine).append("\n");
-                    logger.info("Creating exercise " + exerciseCount);
+                    logger.debug("Creating exercise " + exerciseCount);
                     exerciseCount += 1;
                     Exercice exercice = ExerciseFactory.exerciceFactory(currentExerciceContent.toString());
                     this.exercises.add(exercice); // REGISTERING EXERCISE INSIDE THE DOCUMENT

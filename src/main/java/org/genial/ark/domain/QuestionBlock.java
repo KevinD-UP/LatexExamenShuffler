@@ -45,7 +45,7 @@ public class QuestionBlock implements ContentExercise{
 
 
     private void parse(String content){
-        logger.info("Parsing question block");
+        logger.debug("Parsing question block");
         Scanner sc = new Scanner(content);
         int i =0;
         int state =0;

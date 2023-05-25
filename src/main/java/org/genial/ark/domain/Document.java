@@ -14,6 +14,7 @@ import java.util.Scanner;
 import org.apache.commons.collections4.iterators.PermutationIterator;
 import org.genial.ark.domain.parameterized.ParameterizedDocument;
 
+import static java.lang.Math.log;
 import static java.lang.Math.min;
 
 
@@ -33,6 +34,8 @@ public class Document {
     public static final String FIXED = "fixed";
     public static final String ENDSUBSET = "endsubset";
 
+    private boolean subsetOn;
+
     private ArrayList<Exercice> exercises = new ArrayList<>();
 
     private ArrayList<DocumentBlock> documentBlocks = new ArrayList<>();
@@ -42,8 +45,9 @@ public class Document {
 
     private String afterExercisesContent = "";
 
-    public Document(String inputPath){
+    public Document(String inputPath, boolean subsetOn){
         this.inputPath = inputPath;
+        this.subsetOn = subsetOn;
     }
 
     public int[][] generateVariations(String outputDirectory, String filename, int numberVariations){
@@ -242,6 +246,10 @@ public class Document {
             
             // %subset
             if(currentLine.trim().startsWith(COMMENT + SUBSET)){
+                if(!subsetOn){
+                    logger.error("Encountered " + COMMENT + SUBSET + " at line " + lineNum + " but subset is not handled by generate command");
+                    System.exit(-1);
+                }
                 if(subsetState == 1){
                     logger.error("Malformed document, encountered " + COMMENT + SUBSET + " at line " + lineNum + " but a subset block was alreayd opened and not closed");
                     System.exit(-1);
@@ -267,6 +275,10 @@ public class Document {
             }
             // %endsubset
             if(currentLine.trim().equals(COMMENT + ENDSUBSET)){
+                if(!subsetOn){
+                    logger.error("Encountered " + COMMENT + ENDSUBSET + " at line " + lineNum + " but subset is not handled by generate command");
+                    System.exit(-1);
+                }
                 if(subsetState == 0 || subsetState == 2){
                     logger.error("Malformed document, encountered " + COMMENT + ENDSUBSET + " at line " + lineNum + " but no subset block was opened");
                     System.exit(-1);

@@ -8,15 +8,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static org.genial.ark.domain.Document.COMMENT;
+
 public class ParameterizedDocument {
 
     /**
      * Logger.
      */
     private static final Logger logger = LogManager.getLogger(ParameterizedDocument.class);
-    public static final String VAR = "%var";
-    public static final String ENDVAR = "%endvar";
-    public static final String END_DEC = "%end dec";
+    public static final String VAR = COMMENT + "var";
+    public static final String ENDVAR = COMMENT + "endvar";
+    public static final String END_DEC = COMMENT + "enddec";
 
 
     // all the variables registered in this parameterized documen

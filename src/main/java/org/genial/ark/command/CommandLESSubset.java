@@ -57,7 +57,7 @@ public class CommandLESSubset implements Runnable {
             outputDir = outputDir + "/";
         }
 
-        Document document = new Document(inputPath);
+        Document document = new Document(inputPath,true);
         LatexToPdfConverter converter = new LatexToPdfConverter(compiler);
         document.generateVariationsDomain(
                 outputDir,

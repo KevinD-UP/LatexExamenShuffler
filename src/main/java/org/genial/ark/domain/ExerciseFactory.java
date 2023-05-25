@@ -15,8 +15,8 @@ public class ExerciseFactory {
      * Logger.
      */
     private static final Logger logger = LogManager.getLogger(ExerciseFactory.class);
-    public static final String BEGIN_QUESTION_BLOCK = "%qb";
-    public static final String END_QUESTION_BLOCK = "%endqb";
+    public static final String BEGIN_QUESTION_BLOCK = COMMENT + "shuffle";
+    public static final String END_QUESTION_BLOCK = COMMENT + "endshuffle";
 
 
     public static Exercice exerciceFactory(String content){

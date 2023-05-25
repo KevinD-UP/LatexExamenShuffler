@@ -61,7 +61,7 @@ public class CommandLESGenerate implements Runnable {
             outputDir = outputDir + "/";
         }
 
-        Document document = new Document(inputPath);
+        Document document = new Document(inputPath,false);
         LatexToPdfConverter converter = new LatexToPdfConverter(compiler);
         int [][] variations;
         variations = document.generateVariations(outputDir, filename, numberVariations);

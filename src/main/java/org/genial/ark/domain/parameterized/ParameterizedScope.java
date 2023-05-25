@@ -12,14 +12,16 @@ public class ParameterizedScope {
      */
     private static final Logger logger = LogManager.getLogger(org.genial.ark.domain.parameterized.ParameterizedDocument.class);
 
-    private HashMap<String,Variable> variables;
+    private HashMap<String,Variable> variables; // ALL OF THE VARIABLES IN A SCOPE, THE KEY IS THE VARIABLE NAME
 
-    private ParameterizedDocument parameterizedDocument;
+    private ParameterizedDocument parameterizedDocument; // PARAMETERIZED DOCUMENT THE SCOPE IS RELEVANT IN TO REGISTER IT S VARIABLE THERRE
 
 
     public String getValueForName(char c){
         return  this.variables.get(String.valueOf(c)).getCurrentValue();
     }
+
+    // Returns truc is there is an entry is variables hashmap with key c
     public boolean isVariable(char c){
         String name = String.valueOf(c);
         return this.variables.containsKey(name);
@@ -74,7 +76,10 @@ public class ParameterizedScope {
         }
         String name = splitNameValues[0].trim(); // TRIM POSSIBLE WHITESPACE
         String[] allowedValues = splitNameValues[1].trim().split(";"); // We get an array where each value is an allowedValue
-
+        if(allowedValues[0].length() == 0){
+            logger.error("Malformed variable allowed values declaration " + line );
+            System.exit(-1);
+        }
         ArrayList<String> allowedValuesArrayList = new ArrayList<>(Arrays.asList(allowedValues)); // Convert to arrayList
         allowedValuesArrayList.add(name); // for now it's own name is an allowed value
 

@@ -18,6 +18,8 @@ public class ParameterizedDocument {
     public static final String ENDVAR = "%endvar";
     public static final String END_DEC = "%end dec";
 
+
+    // all the variables registered in this parameterized documen
     private ArrayList<Variable> allVariables= new ArrayList<>();
 
     private ArrayList<ContentBlock> contentBlocks = new ArrayList<>();
@@ -35,10 +37,13 @@ public class ParameterizedDocument {
         return stringBuilder.toString();
     }
 
+
+    // registers a variable in all the variables relevant to this parameterized document
     public void registerVariable(Variable v){
         this.allVariables.add(v);
     }
 
+    // for all the variables of this document, a value is picked and stays the same until the variable is re-set
     public void setAllVariables(){
         for(Variable variable : this.allVariables){
             variable.pickValue();
@@ -120,29 +125,30 @@ public class ParameterizedDocument {
                         logger.error("Malformed document, encountered " + ENDVAR + " at line "  + lineNum + " but not var scope was opened");
                         System.exit(-1);
                     }
-
+                    // A SCOPE JUST CLOSED SO WE CREATE THE BLOCK
                     ContentBlock contentBlock = new ParametrizedContentBlock(currentContent.toString(),scopes.get(currentScopeDepth));
                     contentBlocks.add(contentBlock);
                     currentContent = new StringBuilder();
-                    scopes.remove(currentScopeDepth);
+                    scopes.remove(currentScopeDepth); // THIS SCOPE IS NO LONGER RELEVANT, IT IS DELETED AND THE DEPTH CHANGES
                     currentScopeDepth -=1;
                     state = 2;
                 }
 
                 else{
-                    currentContent.append(currentLine).append("\n");
+                    currentContent.append(currentLine).append("\n"); // OTHERWISE WE ADD THE LINE TO THE CURRENT BLOCK
                 }
 
                 lineNum += 1;
             }
             sc.close();
 
-            if(state == 1){
+            // IF WE FINISH READING THE DOCUMENT
+            if(state == 1){ // SCOPE IS NOT CLOSED BY THE END
                 logger.error("Malformed document, a var scope was opened but not closed by the end of the document");
                 System.exit(-1);
             } else{
                 ContentBlock contentBlock;
-                if(currentScopeDepth == -1){
+                if(currentScopeDepth == -1){ // THE LAST BLOCK IS NOT IN A VAR SCOPE
                     contentBlock = new PlainContentBlock(currentContent.toString());
                 } else{
                     contentBlock = new ParametrizedContentBlock(currentContent.toString(), scopes.get(currentScopeDepth));

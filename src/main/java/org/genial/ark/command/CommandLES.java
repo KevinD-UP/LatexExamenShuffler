@@ -27,6 +27,8 @@ public class CommandLES implements Runnable{
     @CommandLine.Parameters(description = "Number of desired variations to generate")
     int numberVariations;    // assigned index = "1"
 
+    //@CommandLine.Option(names={"--"})
+
 
     /**
      * Output Directory.

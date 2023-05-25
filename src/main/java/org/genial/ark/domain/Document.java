@@ -253,7 +253,7 @@ public class Document {
             Files.createDirectories(of.getParent());
             Files.writeString(of, this.beforeExercisesContent, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
             for(int index : exercisesPermutation) {
-                Files.writeString(of, this.exercises.get(index).toString(), StandardOpenOption.APPEND);
+                Files.writeString(of, this.documentBlocks.get(index).toString(), StandardOpenOption.APPEND);
             }
             Files.writeString(of, this.afterExercisesContent, StandardOpenOption.APPEND);
         } catch (Exception e) {
@@ -302,6 +302,8 @@ public class Document {
                     exerciseCount += 1;
                     Exercice exercice = ExerciseFactory.exerciceFactory(currentExerciceContent.toString());
                     this.exercises.add(exercice); // REGISTERING EXERCISE INSIDE THE DOCUMENT
+                    DocumentBlock documentBlock = exercice;
+                    this.documentBlocks.add(documentBlock);
                     currentExerciceContent = new StringBuilder(); // RESET FOR NEXT EXERCISE
                 } else {
                     logger.error("Error, malformed document, encountered " + END_EXO + " at line " + lineNum + " but no exercise was open");

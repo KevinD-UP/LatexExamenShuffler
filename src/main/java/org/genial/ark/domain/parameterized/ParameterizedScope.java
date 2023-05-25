@@ -71,6 +71,10 @@ public class ParameterizedScope {
         // Line format is name : allowedVal;allowedVal so we should get an array [name;"allowedVal;allowedVal]]
         String[] splitNameValues = workingLine.split(":");
         if(splitNameValues.length != 2){
+            if(splitNameValues.length <2){
+                logger.error("Malformed var scope declaration line \n " + line + "\n found no declaration after : ");
+                System.exit(-1);
+            }
             logger.error("Malformed var scope declaration line \n" + line  + "\n found more than one : character");
             System.exit(-1);
         }

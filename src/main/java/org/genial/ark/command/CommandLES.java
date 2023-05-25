@@ -73,6 +73,7 @@ public class CommandLES implements Runnable{
         if (!outputDir.endsWith("/")) {
             outputDir = outputDir + "/";
         }
+
         Document document = new Document(inputPath);
         LatexToPdfConverter converter = new LatexToPdfConverter(compiler);
         int [][] variations;

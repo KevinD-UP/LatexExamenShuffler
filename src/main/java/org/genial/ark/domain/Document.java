@@ -246,10 +246,6 @@ public class Document {
             
             // %subset
             if(currentLine.trim().startsWith(COMMENT + SUBSET)){
-                if(!subsetOn){
-                    logger.error("Encountered " + COMMENT + SUBSET + " at line " + lineNum + " but subset is not handled by generate command");
-                    System.exit(-1);
-                }
                 if(subsetState == 1){
                     logger.error("Malformed document, encountered " + COMMENT + SUBSET + " at line " + lineNum + " but a subset block was alreayd opened and not closed");
                     System.exit(-1);
@@ -257,7 +253,7 @@ public class Document {
                     if(state == 1){
                         logger.error("Malformed document, encountered " + COMMENT + SUBSET + " at line " + lineNum + " but a subset block can't start within an exercise block");
                         System.exit(-1);
-                    } else{
+                    } else if(subsetOn){
                         String[] split = currentLine.trim().split(" ");
                         if(split.length != 2){
                             logger.error("Malformed declaration of subset "  + currentLine + " at line " + lineNum);
@@ -275,18 +271,14 @@ public class Document {
             }
             // %endsubset
             if(currentLine.trim().equals(COMMENT + ENDSUBSET)){
-                if(!subsetOn){
-                    logger.error("Encountered " + COMMENT + ENDSUBSET + " at line " + lineNum + " but subset is not handled by generate command");
-                    System.exit(-1);
-                }
-                if(subsetState == 0 || subsetState == 2){
+                if((subsetState == 0 || subsetState == 2)&& subsetOn){
                     logger.error("Malformed document, encountered " + COMMENT + ENDSUBSET + " at line " + lineNum + " but no subset block was opened");
                     System.exit(-1);
                 } else if (subsetState == 1){
                     if(state == 1){
                         logger.error("Malformed document, encountered " + COMMENT + SUBSET + " at line " + lineNum + " but a subset block can't start within an exercise block");
                         System.exit(-1);
-                    } else {
+                    } else if(subsetOn){
                         subsetState = 2;
                         DocumentBlock documentBlock = new SubSet(currentSubset, currentSubsetNbPick);
                         this.documentBlocks.add(documentBlock);
@@ -316,7 +308,7 @@ public class Document {
                     exerciseCount += 1;
                     Exercice exercice = ExerciseFactory.exerciceFactory(currentExerciceContent.toString());
                     this.exercises.add(exercice); // REGISTERING EXERCISE INSIDE THE DOCUMENT
-                    if(subsetState == 1){
+                    if(subsetState == 1 && subsetOn){
                         currentSubset.add(exercice);
                     } else{
                         DocumentBlock documentBlock = exercice;

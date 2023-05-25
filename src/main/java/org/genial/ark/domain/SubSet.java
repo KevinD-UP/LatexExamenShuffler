@@ -51,7 +51,6 @@ public class SubSet implements DocumentBlock {
     @Override
     public String toString() {
         int[] selected = this.pick();
-        System.out.println(Arrays.toString(selected));
         StringBuilder res = new StringBuilder();
         for(int i = 0; i < selected.length; i++) {
             res.append(this.exercices.get(selected[i]).toString());

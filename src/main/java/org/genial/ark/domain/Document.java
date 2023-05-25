@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import org.apache.commons.collections4.iterators.PermutationIterator;
+import org.genial.ark.domain.parameterized.ContentBlock;
 import org.genial.ark.domain.parameterized.ParameterizedDocument;
 
 import static java.lang.Math.min;
@@ -20,6 +21,7 @@ import static java.lang.Math.min;
 public class Document {
 
 
+    public static final String SUBSET = "subset";
     /**
      * Logger.
      */
@@ -30,6 +32,7 @@ public class Document {
     public static final String END_EXO = "\\end{exo}";
     public static final String COMMENT = "%";
     public static final String FIXED = "fixed";
+    public static final String ENDSUBSET = "endsubset";
 
     private ArrayList<Exercice> exercises = new ArrayList<>();
 
@@ -279,9 +282,62 @@ public class Document {
             state 1 : has seen a \begin{exo} line but no \end{exo} line yet
             state 2 : has seen a \end{exo} line last at the previous iteration of the loop
              */
+        int subsetState = 0;
+        /*
+            subsetState 0 : has not seen %subset yet
+            subsetState 1 : has seen %subset but not %endsubset
+            subsetState 2 : last subset comment seen was a %endsubset
+         */
+        ArrayList<Exercice> currentSubset = new ArrayList<>();
+        int currentSubsetNbPick = 0;
         while(sc.hasNextLine())
         {
             String currentLine = sc.nextLine();
+            
+            // %subset
+            if(currentLine.trim().startsWith(COMMENT + SUBSET)){
+                if(subsetState == 1){
+                    logger.error("Malformed document, encountered " + COMMENT + SUBSET + " at line " + lineNum + " but a subset block was alreayd opened and not closed");
+                    System.exit(-1);
+                } else if(subsetState == 0 || subsetState == 2){
+                    if(state == 1){
+                        logger.error("Malformed document, encountered " + COMMENT + SUBSET + " at line " + lineNum + " but a subset block can't start within an exercise block");
+                        System.exit(-1);
+                    } else{
+                        String[] split = currentLine.trim().split(" ");
+                        if(split.length != 2){
+                            logger.error("Malformed declaration of subset "  + currentLine + " at line " + lineNum);
+                            System.exit(-1);
+                        }
+                        try {
+                            currentSubsetNbPick = Integer.parseInt(split[1].trim());
+                        } catch (Exception e){
+
+                        }
+                        subsetState = 1;
+                    }
+                }
+
+            }
+            // %endsubset
+            if(currentLine.trim().equals(COMMENT + ENDSUBSET)){
+                if(subsetState == 0 || subsetState == 2){
+                    logger.error("Malformed document, encountered " + COMMENT + ENDSUBSET + " at line " + lineNum + " but no subset block was opened");
+                    System.exit(-1);
+                } else if (subsetState == 2){
+                    if(state == 1){
+                        logger.error("Malformed document, encountered " + COMMENT + SUBSET + " at line " + lineNum + " but a subset block can't start within an exercise block");
+                        System.exit(-1);
+                    } else {
+                        subsetState = 2;
+                        DocumentBlock documentBlock = new SubSet(currentSubset, currentSubsetNbPick);
+                        this.documentBlocks.add(documentBlock);
+                        currentSubset = new ArrayList<>();
+                        currentSubsetNbPick = 0;
+                    }
+                }
+            }
+            
             //BEGIN EXO
             if(currentLine.trim().startsWith(BEGIN_EXO)){
                 if(state == 2 || state == 0){
@@ -302,8 +358,12 @@ public class Document {
                     exerciseCount += 1;
                     Exercice exercice = ExerciseFactory.exerciceFactory(currentExerciceContent.toString());
                     this.exercises.add(exercice); // REGISTERING EXERCISE INSIDE THE DOCUMENT
-                    DocumentBlock documentBlock = exercice;
-                    this.documentBlocks.add(documentBlock);
+                    if(subsetState == 1){
+                        currentSubset.add(exercice);
+                    } else{
+                        DocumentBlock documentBlock = exercice;
+                        this.documentBlocks.add(documentBlock);
+                    }
                     currentExerciceContent = new StringBuilder(); // RESET FOR NEXT EXERCISE
                 } else {
                     logger.error("Error, malformed document, encountered " + END_EXO + " at line " + lineNum + " but no exercise was open");
@@ -323,6 +383,15 @@ public class Document {
                 }
             }
             lineNum += 1;
+        }
+
+        if(subsetState == 1){
+            logger.error("Malformed document, a subset block was opened but never closed by the end of the document");
+            System.exit(-1);
+        }
+
+        if(state == 1){
+            logger.error("Malformed document, an exercise block was opened but never closed by the end of the document");
         }
         sc.close();
     }

@@ -85,7 +85,7 @@ public class ParameterizedScope {
             System.exit(-1);
         }
         ArrayList<String> allowedValuesArrayList = new ArrayList<>(Arrays.asList(allowedValues)); // Convert to arrayList
-        allowedValuesArrayList.add(name); // for now it's own name is an allowed value
+     //   allowedValuesArrayList.add(name); // for now it's own name is an allowed value
 
         Variable variable = new Variable(name,allowedValuesArrayList);
         this.parameterizedDocument.registerVariable(variable);

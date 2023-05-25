@@ -17,7 +17,7 @@ Lancer depuis la racine du projet la commande `mvn install`
 
 ### Structure du document
 
-LES accepte comme entrée des fichiers au format .tex qui respectent les spécifications suivante : 
+LES accepte comme entrée des fichiers au format .tex qui respectent les spécifications suivantes : 
 
 - Le document doit définir les environnements suivants :
 
@@ -43,8 +43,7 @@ Ce que l'on souhaite sauf des exercices - fin du document
 
 ### Syntaxe propre à l'outil
 
- - Toutes les annotations doivent être précédée de `%%`.
-
+ - Toutes les annotations doivent être précédées de `%%`.
 
 ### Fixer les exercices
 
@@ -147,7 +146,7 @@ ici x = a et y = b
 
 ### Subset
 
-Il est possible de déclarer des blocs qui consistue des sous ensemble d'exercises. De tels blocs sont signalés comme suit :
+Il est possible de déclarer des blocs qui constitue des sous-ensembles d'exercices. De tels blocs sont signalés comme suit :
 
 ```
 %%subset i 
@@ -156,9 +155,9 @@ des exercices
 
 ```
 
-les blocs subset ne peuvent pas se chevaucher. Un bloc subset ne peux pas commencer ou se terminer à l'interieur d'un bloc exercice. 
+les blocs subset ne peuvent pas se chevaucher. Un bloc subset ne permet pas commencer ou se terminer à l'intérieur d'un bloc exercice. 
 
-Les variations générées contiendront `i` exercices choisis aléatoirement parmis ceux contenus dans le bloc subset en lieu du subset. 
+Les variations générées contiendront `i` exercices choisis aléatoirement parmi ceux contenus dans le bloc subset en lieu du subset. 
 
 ## Lancement du programme
 
@@ -166,9 +165,9 @@ La commande generate doit être lancée comme suit
 
 `./latexExamenShuffler.sh sousCommande cheminInput nbrVariations`
 
-- `sousCommande` spécifie quelle version de LES sera exécuter (`generate` ou `subset`, voir plus bas)
+- `sousCommande` spécifie quelle version de `LES` sera exécuter (`generate` ou `subset`, voir plus bas)
 
-- `nbrVariations` variations du fichier .tex de chemin `cheminInput` seront alors générées. Elles seront nommées "generatedI.tex" , I allant de 1 au nombre de variation demandé. 
+- `nbrVariations` variations du fichier .tex de chemin `cheminInput` seront alors générées. Elles seront nommées "generatedI.tex" , I allant de 1 au nombre de variations demandé. 
 Par défaut les variations se situeront dans le dossier `output/`. 
 
 

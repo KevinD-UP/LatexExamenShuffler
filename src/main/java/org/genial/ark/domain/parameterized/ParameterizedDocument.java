@@ -62,7 +62,7 @@ public class ParameterizedDocument {
     }
 
     private void parseVariable(String inputPath){
-        logger.info("Parsing input file");
+        logger.debug("Parsing input file");
         try {
             //the file to be opened for reading
             FileInputStream fis=new FileInputStream(inputPath);

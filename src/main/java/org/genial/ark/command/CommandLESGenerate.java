@@ -55,7 +55,7 @@ public class CommandLESGenerate implements Runnable {
     @Override
     public void run() {
 
-        logger.info("LES command called");
+        logger.info("LES generate command called");
         logger.debug("input path is " + inputPath);
         if (!outputDir.endsWith("/")) {
             outputDir = outputDir + "/";

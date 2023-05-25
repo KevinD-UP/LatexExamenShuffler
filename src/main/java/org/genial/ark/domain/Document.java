@@ -175,7 +175,7 @@ public class Document {
         this.documentBlocks = new ArrayList<>();
         this.beforeExercisesContent = "";
         this.afterExercisesContent = "";
-        logger.info("Parsing input file");
+        logger.debug("Parsing input file");
         Scanner sc=new Scanner(content);    //file to be scanned
         StringBuilder currentExerciceContent = new StringBuilder();
         int state = 0;

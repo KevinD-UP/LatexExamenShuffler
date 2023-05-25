@@ -51,8 +51,8 @@ public class CommandLESSubset implements Runnable {
 
     @Override
     public void run() {
-        logger.info("LES command called");
-        logger.info("input path is " + inputPath);
+        logger.info("LES subset command called");
+        logger.debug("input path is " + inputPath);
         if (!outputDir.endsWith("/")) {
             outputDir = outputDir + "/";
         }

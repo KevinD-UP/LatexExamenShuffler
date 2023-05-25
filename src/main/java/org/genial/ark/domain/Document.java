@@ -13,8 +13,6 @@ import java.util.Scanner;
 
 import org.apache.commons.collections4.iterators.PermutationIterator;
 import org.genial.ark.domain.parameterized.ParameterizedDocument;
-
-import static java.lang.Math.log;
 import static java.lang.Math.min;
 
 
@@ -30,7 +28,7 @@ public class Document {
 
     public static final String BEGIN_EXO = "\\begin{exo}";
     public static final String END_EXO = "\\end{exo}";
-    public static final String COMMENT = "%";
+    public static final String COMMENT = "%%";
     public static final String FIXED = "fixed";
     public static final String ENDSUBSET = "endsubset";
 

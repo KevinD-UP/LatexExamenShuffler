@@ -47,12 +47,12 @@
 
 Utilisez uniquement les espaces encadrées prévues pour répondre.
 
-%subset 1
+%ùsubset 1
 \begin{exo}
-%var
-  % x : m;b
-  % y : g;t
-  %enddec
+%%var
+  %% x : m;b
+  %% y : g;t
+  %%enddec
   On considère les affectations suivantes:$
 v_1 = [ x\mapsto 1] \quad
 v_2= [ x\mapsto 1, y\mapsto 1 ]  \quad
@@ -69,23 +69,23 @@ Remplissez le tableau suivant ($0$ ou $1$ dans les trois premières colonnes et 
     $((x \land z) \vee ((\neg x \land z) \vee \neg z))$&&&&&&\\[0.5ex]
     \hline
   \end{tabular}
-  %endvar
+  %%endvar
 \end{exo}
 
-\begin{exo}%fixed
+\begin{exo}%%fixed
 
   Formalisez les phrases suivantes en logique propositionnelle
   (vous pouvez utiliser l'implication).
   Indiquez pour chaque variable propositionnelle que vous utilisez
   à quoi elle correspond.
 
-  %shuffle
+  %%shuffle
   \begin{enumerate}
-  \item Paris est belle.%fixed
+  \item Paris est belle.%%fixed
   \item Si Paris est belle, alors Berlin est belle.
   \item Si Berlin n'est pas belle, alors ni Paris ni Rome sont belles.
   \end{enumerate}
-  %endshuffle
+  %%endshuffle
 
   \framebox[\textwidth]{
       \rule[-0.4cm]{0mm}{4cm}
@@ -107,25 +107,25 @@ Remplissez le tableau suivant ($0$ ou $1$ dans les trois premières colonnes et 
 \end{exo}
 
 \begin{exo}
-  %var
-  % x : u
-  %enddec
+  %%var
+  %% x : u
+  %%enddec
   On considère la fonction $taille(p)$ qui étant donnée une formule propositionnelle $p$
   désigne sa taille (en nombre de n\oe{u}ds, y compris les feuilles) de
   l'arbre syntaxique correspondant. Par exemple $taille((x \vee (\neg x \land y)))=6$ et
   $taille(\neg x) = 2$.
 
-  %var
-  % y : t;e
-  %enddec
+  %%var
+  %% y : t;e
+  %%enddec
   On considère également la fonction $hauteur(p)$ qui étant donnée une formule
   propositionnelle $p$ désigne la hauteur de l'arbre syntaxique correspondant.
   Par exemple, $hauteur(((\neg x \land y) \vee x))=4$ et
   $hauteur((x\vee(\neg x \land y)))=4$ et
   $hauteur(\neg x) = 2$.
   Complétez les définitions récursives suivantes:
-  %endvar
-  %shuffle
+  %%endvar
+  %%shuffle
   \begin{itemize}
   \item $taille(x) = $ \framebox[1cm]{\rule[-0.2cm]{0mm}{0.5cm}},
     $hauteur(x) = $ \framebox[1cm]{\rule[-0.2cm]{0mm}{0.5cm}}
@@ -136,14 +136,14 @@ Remplissez le tableau suivant ($0$ ou $1$ dans les trois premières colonnes et 
     \item $taille((p \vee q)) = $ \framebox[4cm]{\rule[-0.2cm]{0mm}{0.5cm}},
         $hauteur((p \vee q)) = $ \framebox[4cm]{\rule[-0.2cm]{0mm}{0.5cm}}
   \end{itemize}
-  %endshuffle
-  %endvar
+  %%endshuffle
+  %%endvar
   Montrez par induction structurelle que pour toute formule propositionnelle
   $p$ on a $taille(p) \geq hauteur(p)$.\\[2ex]
    \framebox[\textwidth]{
     \rule[-0.4cm]{0mm}{13cm}
    }
 \end{exo}
-%endsubset
+%%endsubset
 
 \end{document}

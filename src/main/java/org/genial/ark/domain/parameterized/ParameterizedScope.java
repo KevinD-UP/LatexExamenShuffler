@@ -64,7 +64,7 @@ public class ParameterizedScope {
     private  Variable parseDeclarationLine(String line){
         String workingLine = line;
         workingLine = workingLine.trim(); // FIRST TRIM EG " % ..." becomes "% ..."
-        workingLine = workingLine.substring(1); // REMOVING % AT THE BEGINNING
+        workingLine = workingLine.substring(2); // REMOVING % AT THE BEGINNING
         workingLine = workingLine.trim(); // SECOND TRIM EG " x : ..." becomes "x : ..."*
 
 

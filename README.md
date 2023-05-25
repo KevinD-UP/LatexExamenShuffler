@@ -10,6 +10,34 @@
 
 Lancer depuis la racine du projet la commande `mvn package`
 
+
+## Syntaxe Acceptée
+
+LES accepte comme entrée des fichiers au format .tex qui respectent les spécifications suivante : 
+
+- Le document doit définir les environnements suivants :
+
+```latex
+\newtheorem{exi}{}
+\newenvironment{exo}{\begin{exi}\em}{\end{exi}}
+```
+
+- Le document doit avoir la structure suivante : 
+
+```
+Ce que l'on souhaite sauf des exercices - début du document
+
+Suite de blocs exo
+
+Ce que l'on souhaite sauf des exercices - fin du document
+```
+
+- Un exercice doit être déclaré comme un bloc  `\begin{exo}` et  `\end{exo}`
+
+- Tout ce qui se trouve entre une ligne `\end{exo}` et une ligne `\begin{exo}` ne sera pas reporté sur les variations générées.
+
+
+
 ## Lancer le projet
 
 Lancer depuis le répertoire du projet la commande 

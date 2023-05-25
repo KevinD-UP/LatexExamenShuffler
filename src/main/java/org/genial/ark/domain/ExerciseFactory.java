@@ -34,9 +34,9 @@ public class ExerciseFactory {
         ArrayList<ContentExercise> contentExerciseArrayList = new ArrayList<>();
         StringBuilder contentCurrentBlock = new StringBuilder();
         /*
-            state 0 : has not seen a %qb yet
-            state 1 : has seen a %qb line but no %endi line ye
-            state 2 : has just seen a %endqb line
+            state 0 : has not seen a %shuffle yet
+            state 1 : has seen a %shuffle line but no %endshuffle line ye
+            state 2 : has just seen a %endshuffle line
          */
         while (scanner.hasNextLine()) {
             String currentLine = scanner.nextLine();
@@ -49,7 +49,7 @@ public class ExerciseFactory {
                     System.exit(-1);
                 }
             }
-            // %i
+            // %shuffle
             else if (currentLine.trim().equals(BEGIN_QUESTION_BLOCK)) {
                 if(state == 1){
                     logger.error("Malformed exercise, encountered " + BEGIN_QUESTION_BLOCK + " at line "+ lineNum + " but a question block was already opened and not closed");
@@ -62,7 +62,7 @@ public class ExerciseFactory {
                     }
                     state = 1;
                 }
-            // %endi
+            // %endshuffle
             } else if(currentLine.trim().equals(END_QUESTION_BLOCK)){
                 if(state == 0 || state == 2){
                     logger.error("Malformed exercise, encountered " + END_QUESTION_BLOCK + " at line " + lineNum + " but no question block was opened");

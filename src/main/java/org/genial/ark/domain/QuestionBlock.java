@@ -8,6 +8,8 @@ import java.util.Arrays;
 import java.util.Scanner;
 import java.util.stream.IntStream;
 
+import static org.genial.ark.domain.Document.COMMENT;
+
 public class QuestionBlock implements ContentExercise{
 
 
@@ -16,7 +18,7 @@ public class QuestionBlock implements ContentExercise{
      */
     private static final Logger logger = LogManager.getLogger(QuestionBlock.class);
     public static final String ITEM = "\\item";
-    public static final String FIXED_QUESTION = "%fixed";
+    public static final String FIXED_QUESTION = COMMENT +  "fixed";
 
 
     private ArrayList<Question> questionsArrayList = new ArrayList<>();

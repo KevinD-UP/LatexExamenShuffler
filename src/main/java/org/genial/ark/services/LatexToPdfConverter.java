@@ -14,6 +14,10 @@ public class LatexToPdfConverter {
     private final String compiler;
 
     public LatexToPdfConverter(String compiler){
+        if(!compiler.equals("pdflatex") && !compiler.equals("lualatex") && !compiler.equals("xelatex")){
+            logger.error("This compiler does not exist or you did not install it");
+            System.exit(-1);
+        }
         this.compiler = compiler;
     }
 

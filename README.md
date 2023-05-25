@@ -3,12 +3,14 @@
 ## Pré-requis
 
 - java 20
+- javac 20
 - maven 3.8.1
-- pdfLaTeX ou LuaLaTeX ou XeLaTeX
+- pdfLaTeX
+- en option LuaLaTeX et XeLaTeX
 
 ## Compiler le projet
 
-Lancer depuis la racine du projet la commande `mvn package`
+Lancer depuis la racine du projet la commande `mvn install`
 
 
 ## Syntaxe Acceptée
@@ -112,7 +114,7 @@ contenu ou le renommage s'applique
 
 Si plusieurs valeurs sont déclarée pour une variable la valeur est choisie aléatoirement.
 
-Il est possible de déclarer un scope au sein d'un autre scope. Le rennommage des variables déclarées au sein d'un scope s'applique aussi sur un scope contenu dans celui-ci.
+Il est possible de déclarer un scope au sein d'un autre scope. Le renommage des variables déclarées au sein d'un scope s'applique aussi sur un scope contenu dans celui-ci.
 
 Si un scope déclare une variable étant déjà déclarée dans un scope qui l'englobe, la dernière déclaration sera prise en compte.
 
@@ -185,8 +187,24 @@ Lorsque la sous commande generate est appelée, les annotations subset ne seront
 
 ### subset 
 
-Lorque la sous commmande subset est appellée, les annotations subset seront prises en compte comme décrite dans la syntaxe de l'outil. L'ordre des exercises ne sera pas mélangé. 
+Lorsque la sous-commande subset est appelée, les annotations subset seront prises en compte comme décrite dans la syntaxe de l'outil. L'ordre des exercises ne sera pas mélangé. 
 
+### Exemple d'utilisation
+
+Execution avec permutation d'exercices, de questions et de variables.
+```shell
+./latexExamenShuffler.sh generate examples/cc1.tex 5
+```
+
+Execution sur un fichier contenant du code lua via lualatex.
+```shell
+./latexExamenShuffler.sh generate --compiler lualatex examples/cc2.tex 5
+```
+
+Execution avec domaine.
+```shell
+./latexExamenShuffler.sh subset examples/enonce-base.tex 5
+```
 
 ## Auteurs
 

@@ -12,7 +12,6 @@ import java.util.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import org.apache.commons.math3.util.CombinatoricsUtils;
 import org.apache.commons.collections4.iterators.PermutationIterator;
 
 import static java.lang.Math.min;

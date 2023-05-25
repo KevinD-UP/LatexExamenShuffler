@@ -33,6 +33,8 @@ public class Document {
 
     private ArrayList<Exercice> exercises = new ArrayList<>();
 
+    private ArrayList<DocumentBlock> documentBlocks = new ArrayList<>();
+
     private String inputPath;
     private String beforeExercisesContent = "";
 
@@ -244,21 +246,6 @@ public class Document {
         return shuffledExercicesToReturn;
     }
 
-    private int[] shuffle(int[] tab){
-        int[] exerciseOrder = tab.clone();
-        for(int i = 0; i < exerciseOrder.length ; i ++){
-            int indexSwapA =  (int)(Math.random() * exerciseOrder.length);
-            int indexSwapB = (int)(Math.random() * exerciseOrder.length);
-            // SWAPPING EXERCISES A INDEX A AND B
-            // WE SWAP ONLY IF WE DREW TWO DIFFRENT INDEX AND IF NONE OF THEM SHOULD BE FIXED
-            if(indexSwapA != indexSwapB && !this.exercises.get(exerciseOrder[indexSwapA]).isFixed() && !this.exercises.get(exerciseOrder[indexSwapB]).isFixed()){
-                int tmp =  exerciseOrder[indexSwapA]; // TEMPORARILY SAVING EXERCISE A
-                exerciseOrder[indexSwapA] = exerciseOrder[indexSwapB]; // COPYING EXERCISE B INTO EXERCISE A
-                exerciseOrder[indexSwapB] = tmp; // COPYING EXERCISE A INTO EXERCISE B
-            }
-        }
-        return exerciseOrder;
-    }
 
     private void dumpToTex(int[] exercisesPermutation, String outputFileName) {
         try {

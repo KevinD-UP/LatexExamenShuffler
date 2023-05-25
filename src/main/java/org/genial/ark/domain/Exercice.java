@@ -1,6 +1,6 @@
 package org.genial.ark.domain;
 
-public interface Exercice {
+public interface Exercice extends DocumentBlock{
 
     boolean isFixed();
 

@@ -70,8 +70,9 @@ public class CommandLES implements Runnable{
      */
     @Override
     public void run() {
+
         logger.info("LES command called");
-        logger.info("input path is " + inputPath);
+        logger.debug("input path is " + inputPath);
         if (!outputDir.endsWith("/")) {
             outputDir = outputDir + "/";
         }

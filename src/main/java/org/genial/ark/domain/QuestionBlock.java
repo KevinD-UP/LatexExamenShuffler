@@ -15,7 +15,8 @@ public class QuestionBlock implements ContentExercise{
      * Logger.
      */
     private static final Logger logger = LogManager.getLogger(QuestionBlock.class);
-
+    public static final String ITEM = "\\item";
+    public static final String FIXED_QUESTION = "%fixed";
 
 
     private ArrayList<Question> questionsArrayList = new ArrayList<>();
@@ -62,17 +63,17 @@ public class QuestionBlock implements ContentExercise{
                 currentString = new StringBuilder();
             }
 
-            else if(currentLine.trim().startsWith("\\item")){
+            else if(currentLine.trim().startsWith(ITEM)){
                 if(state != 0){
                     questionsArrayList.add(new Question(currentString.toString(),currentQuestionIsFixed));
                     currentQuestionIsFixed = false;
                     currentString = new StringBuilder();
                     currentString.append(currentLine).append("\n");
-                    if(currentLine.trim().endsWith("%fixed")){
+                    if(currentLine.trim().endsWith(FIXED_QUESTION)){
                         currentQuestionIsFixed = true;
                     }
                 } else{
-                    if(currentLine.trim().endsWith("%fixed")){
+                    if(currentLine.trim().endsWith(FIXED_QUESTION)){
                         currentQuestionIsFixed = true;
                     }
                     currentString.append(currentLine).append("\n");

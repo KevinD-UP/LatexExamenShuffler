@@ -1,0 +1,148 @@
+
+\documentclass[a4paper,10pt,french]{article}
+
+\usepackage{babel}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\usepackage{luacode}
+
+% format standard, centré
+ \setlength{\oddsidemargin}{2mm}
+ \setlength{\evensidemargin}{2mm}
+ \setlength{\textwidth}{155mm}
+ \setlength{\textheight}{245mm}
+ \setlength{\topmargin}{0mm}
+% 1 mm entre chaque paragraphe
+ \setlength{\parskip}{1mm}
+
+\newtheorem{exi}{}
+\newenvironment{exo}{\begin{exi}\em}{\end{exi}}
+
+\newcommand{\lsem}{\llbracket}
+\newcommand{\rsem}{\rrbracket}
+
+\newcommand{\inte}[2]{\llbracket #1 \rsem {#2}}
+
+\begin{document}
+
+\vspace*{-1cm}
+\hrule
+\medbreak
+\centerline{\textsf{O{\small utils} et L{\small ogique} (OL4)}}
+\medbreak
+\hrule
+\medbreak
+\centerline{\textsf{\phantom{(} ~~~~~~~CC1~~~~~~~\phantom{)}}}
+\medbreak
+\hrule
+
+\bigskip
+\bigskip
+
+{\bf NOM:} \hspace*{4cm} {\bf PRENOM:} \hspace*{3cm} {\bf Numéro
+  d'étudiant:}\\
+
+Utilisez uniquement les espaces encadrées prévues pour répondre.
+
+\begin{exo}
+  Formalisez les phrases suivantes en logique propositionnelle
+  (vous pouvez utiliser l'implication).
+  Indiquez pour chaque variable propositionnelle que vous utilisez
+  à quoi elle correspond.
+
+  \begin{enumerate}
+  \item Michel est méchant.
+  \item Si Michel n'est pas méchant, alors Marc est méchant.
+  \item Si ni Ralf ni Marc sont méchants, alors Michel est méchant.
+  \end{enumerate}
+  
+ \framebox[\textwidth]{
+  \rule[-0.4cm]{0mm}{4cm}
+ }
+ 
+  \end{exo}
+  
+\begin{exo}
+
+  On considère les affectations suivantes: $v_1 = [ x\mapsto 1, z\mapsto 1 ] \quad
+v_2= [ y\mapsto 1, z\mapsto 1 ] \quad
+v_3= [ z\mapsto 1]$.
+Remplissez le tableau suivant ($0$ ou $1$ dans les trois premières colonnes et $vrai$ ou $\mathit{faux}$ dans le reste)~:
+
+\begin{tabular}{|c|c|c|c|c|c|c|}
+  \hline
+    Formule $p$ &$\inte{p}{v_1}$&$\inte{p}{v_2}$&$\inte{p}{v_3}$&$p$ valide ?&$p$ satisfaisable ?&$p$ contradictoire ?\\[0.5ex]
+    \hline
+    $(z \land (\neg x \vee y))$&&&&&&\\[0.5ex]
+    \hline
+    $(\neg z \land (y \land (x \land z)))$&&&&&&\\[0.5ex]
+    \hline
+    $((\neg x \land \neg z) \vee ((\neg x \land z) \vee x))$&&&&&&\\[0.5ex]
+    \hline
+  \end{tabular}
+\end{exo}
+
+\begin{exo}
+  Étant donnée une formule propositionnelle $p$ 
+  on considère l'affectation $v_p$, qui associe à chaque variable de
+  $p$ la valeur de vérité $1$.
+  Montrer par induction structurelle sur les formules que pour toute formule
+  $p$ qui ne contient pas $\neg$, on a $\inte{p}{v_p}=1$.
+  N.B.~: dans la preuve le cas $\neg p$ n'est pas considéré.
+  
+  \framebox[\textwidth]{
+  \rule[-0.4cm]{0mm}{8.5cm}
+  }
+  
+\end{exo}
+
+\begin{exo}
+  On considère la fonction $h(p)$ qui étant donnée une formule
+  propositionnelle $p$ désigne la hauteur de l'arbre syntaxique correspondant.
+  Par exemple, $h((x\vee(\neg x \land y)))=4$ et
+  $h(((\neg x \land y) \vee x))=4$ et 
+  $h(\neg x) = 2$
+
+  On considère également la fonction $\mathit{nsf}(p)$ qui étant donnée une formule
+  $p$ désigne le nombre de sous-formules (pas forcément distinctes)
+  de $p$. La formule $p$ est elle-même une sous-formule
+  de $p$. Par exemple, $\mathit{nsf}(\neg x) = 2$ et
+  $\mathit{nsf}(((x \vee x) \land x)) = 5$, car $x$ (3 fois) et $(x \vee x)$
+  et $((x \vee x) \land x)$ sont les sous-formules.
+    Complétez les définitions récursives suivantes:
+  \begin{itemize}
+  \item $h(x) = $ \framebox[1cm]{\rule[-0.2cm]{0mm}{0.5cm}},
+    $\mathit{nsf}(x) = $ \framebox[1cm]{\rule[-0.2cm]{0mm}{0.5cm}}
+  \item $h(\neg p) = $ \framebox[3cm]{\rule[-0.2cm]{0mm}{0.5cm}},
+    $\mathit{nsf}(\neg p) = $ \framebox[3cm]{\rule[-0.2cm]{0mm}{0.5cm}}
+  \item $h((p \land q)) = $ \framebox[4cm]{\rule[-0.2cm]{0mm}{0.5cm}},
+    $\mathit{nsf}((p \land q)) = $ \framebox[4cm]{\rule[-0.2cm]{0mm}{0.5cm}}
+    \item $h((p \vee q)) = $ \framebox[4cm]{\rule[-0.2cm]{0mm}{0.5cm}},
+        $\mathit{nsf}((p \vee q)) = $ \framebox[4cm]{\rule[-0.2cm]{0mm}{0.5cm}}
+  \end{itemize}
+  
+  Montrez par induction structurelle que pour toute formule propositionnelle
+  $p$ on a $h(p) \leq \mathit{nsf}(p)$.\\[2ex]
+   \framebox[\textwidth]{
+    \rule[-0.4cm]{0mm}{13cm}
+   }
+\end{exo}
+
+\begin{luacode*}
+  -- Définition de deux variables
+  local a = 5
+  local b = 3
+
+  -- Calcul de la somme
+  local sum = a + b
+
+  -- Affichage du résultat
+  tex.print(string.format("La somme de %d et %d est égale à %d.", a, b, sum))
+\end{luacode*}
+
+\end{document}

@@ -1,0 +1,546 @@
+\documentclass[10pt]{article}
+\newtheorem{exi}{}
+\newenvironment{exo}{\begin{exi}\em}{\end{exi}}
+
+\addtolength{\topmargin}{-1cm}
+\usepackage{amsmath,epsfig}
+\def\python{\textsc{Python\xspace}}
+\usepackage{listings}
+\lstset{language=python}
+\begin{document}
+\vspace*{-1cm}
+
+\noindent
+{\bf NOM: \hspace*{5cm} PRENOM:}\\
+\noindent
+La clarté et la concision seront prises en compte lors de la correction.
+Vous devez impérativement respecter les consignes suivantes :
+\begin{itemize}
+\item Vous téléchargez le fichier \verb+http://www.irif.fr/~haberm/sol_502188_82.py+
+        \item Vous remplissez votre nom et prénom dans le fichier.
+	\item Vous renommez ce fichier et rendez un unique fichier
+              {\tt Prenom\_Nom.py}. 
+        \item Au début vous pouvez importer les modules dont vous aurez besoin.
+	\item Les noms de fonctions que vous écrirez {\bf doivent rester}
+	  identiques à ceux du sujet et vous modifiez {\bf uniquement}
+          le corps des fonctions.
+          \item Laissez les symboles \verb+#+ en place
+          et n'en utilisez pas ailleurs.
+        \item Si vous avez besoin de fonctions intermédiaires, définissez les
+{\bf à l'intérieur} de la fonction demandée.
+        \item Les fonctions ne doivent rien {\bf afficher} (pas d'appel de la fonction \verb+print+).
+\item Exemple:
+\begin{verbatim}
+"""...."""
+import string
+def question1c(l):
+    def mafonctionauxilliaire(): 
+        return
+    mafonctionauxilliaire() 
+    return l
+#
+def ....
+#
+\end{verbatim}
+\end{itemize}
+%%subset 1
+\begin{exo}
+    Écrire une fonction {\tt question1a} qui prend comme argument une liste et
+qui renvoie la somme du 3ème et du dernier élément. Par exemple
+\verb+question1a([1,2,3,4,5,6,7,8,9,10])+ renvoie 13.
+On suppose que la liste est suffisamment longue.
+\end{exo}
+\vspace*{-2ex}
+\begin{exo}
+    Écrire une fonction {\tt question1b} qui prend comme argument une liste et
+qui renvoie la somme du 4ème et du dernier élément. Par exemple
+\verb+question1b([1,2,3,4,5,6,7,8,9,10])+ renvoie 14.
+On suppose que la liste est suffisamment longue.
+\end{exo}
+\vspace*{-2ex}
+\begin{exo}
+    Écrire une fonction {\tt question1c} qui prend comme argument une liste et
+qui renvoie la somme du 5ème et du dernier élément. Par exemple
+\verb+question1c([1,2,3,4,5,6,7,8,9,10])+ renvoie 15.
+On suppose que la liste est suffisamment longue.
+\end{exo}
+\vspace*{-2ex}
+\begin{exo}
+    Écrire une fonction {\tt question1d} qui prend comme argument une liste et
+qui renvoie le produit du 3ème et du dernier élément. Par exemple
+\verb+question1d([1,2,3,4,5,6,7,8,9,10])+ renvoie 30.
+On suppose que la liste est suffisamment longue.
+\end{exo}
+\vspace*{-2ex}
+\begin{exo}
+    Écrire une fonction {\tt question1e} qui prend comme argument une liste et
+qui renvoie le produit du 2ème et du dernier élément. Par exemple
+\verb+question1e([1,2,3,4,5,6,7,8,9,10])+ renvoie 20.
+On suppose que la liste est suffisamment longue.
+\end{exo}
+\vspace*{-2ex}
+\begin{exo}
+    Écrire une fonction {\tt question1f} qui prend comme argument une liste et
+qui renvoie le produit du 4ème et du dernier élément. Par exemple
+\verb+question1f([1,2,3,4,5,6,7,8,9,10])+ renvoie 40.
+On suppose que la liste est suffisamment longue.
+\end{exo}
+%%endsubset
+\vspace*{-2ex}
+%%subset 1
+\begin{exo}
+    Écrire une fonction {\tt question2a} qui prend comme argument une liste d'entiers positifs et qui renvoie la liste des entiers de la liste d'entrée qui sont
+supérieurs ou égaux à 5. Par exemple pour \verb+[10,9,2,3,4,5,6,7,8]+
+on obtient \verb+[10,9,5,6,7,8]+.
+\end{exo}
+\vspace*{-2ex}
+\begin{exo}
+    Écrire une fonction {\tt question2b} qui prend comme argument une liste d'entiers positifs et qui renvoie la liste des entiers de la liste d'entrée qui sont
+supérieurs ou égaux à 6. Par exemple pour \verb+[10,9,2,3,4,5,6,7,8]+
+on obtient \verb+[10,9,6,7,8]+.
+\end{exo}
+\vspace*{-2ex}
+\begin{exo}
+    Écrire une fonction {\tt question2c} qui prend comme argument une liste d'entiers positifs et qui renvoie la liste des entiers de la liste d'entrée qui sont
+supérieurs ou égaux à 7. Par exemple pour \verb+[10,9,2,3,4,5,6,7,8]+
+on obtient \verb+[10,9,7,8]+.
+\end{exo}
+\vspace*{-2ex}
+\begin{exo}
+    Écrire une fonction {\tt question2d} qui prend comme argument une liste d'entiers positifs et qui renvoie la liste des entiers de la liste d'entrée qui sont
+supérieurs ou égaux à 4. Par exemple pour \verb+[10,9,2,3,4,5,6,7,8]+
+on obtient \verb+[10,9,4,5,6,7,8]+.
+\end{exo}
+\vspace*{-2ex}
+\begin{exo}
+    Écrire une fonction {\tt question2e} qui prend comme argument une liste d'entiers positifs et qui renvoie la liste des entiers de la liste d'entrée qui sont
+supérieurs ou égaux à 8. Par exemple pour \verb+[10,9,2,3,4,5,6,7,8]+
+on obtient \verb+[10,9,8]+.
+\end{exo}
+\vspace*{-2ex}
+\begin{exo}
+    Écrire une fonction {\tt question2f} qui prend comme argument une liste d'entiers positifs et qui renvoie la liste des entiers de la liste d'entrée qui sont
+inférieurs ou égaux à 5. Par exemple pour \verb+[10,9,2,3,4,5,6,7,8]+
+on obtient \verb+[2,3,4,5]+.
+\end{exo}
+\vspace*{-2ex}
+\begin{exo}
+    Écrire une fonction {\tt question2g} qui prend comme argument une liste d'entiers positifs et qui renvoie la liste des entiers de la liste d'entrée qui sont
+inférieurs ou égaux à 6. Par exemple pour \verb+[10,9,2,3,4,5,6,7,8]+
+on obtient \verb+[2,3,4,5,6]+.
+\end{exo}
+\vspace*{-2ex}
+\begin{exo}
+    Écrire une fonction {\tt question2h} qui prend comme argument une liste d'entiers positifs et qui renvoie la liste des entiers de la liste d'entrée qui sont
+inférieurs ou égaux à 7. Par exemple pour \verb+[10,9,2,3,4,5,6,7,8]+
+on obtient \verb+[2,3,4,5,6,7]+.
+\end{exo}
+\vspace*{-2ex}
+\begin{exo}
+    Écrire une fonction {\tt question2i} qui prend comme argument une liste d'entiers positifs et qui renvoie la liste des entiers de la liste d'entrée qui sont
+inférieurs ou égaux à 4. Par exemple pour \verb+[10,9,2,3,4,5,6,7,8]+
+on obtient \verb+[2,3,4]+.
+\end{exo}
+\vspace*{-2ex}
+\begin{exo}
+    Écrire une fonction {\tt question2j} qui prend comme argument une liste d'entiers positifs et qui renvoie la liste des entiers de la liste d'entrée qui sont
+inférieurs ou égaux à 8. Par exemple pour \verb+[10,9,2,3,4,5,6,7,8]+
+on obtient \verb+[2,3,4,5,6,7,8]+.
+\end{exo}
+%%endsubset
+\vspace*{-2ex}
+%%subset 1
+\begin{exo}
+    Écrire une fonction {\tt question3a} qui prend comme argument une chaîne de
+caractères composée de chiffres
+et qui renvoie une liste de tous ses chiffres divisibles par $3$
+auxquels on a ajouté $2$. Par
+exemple pour \verb+"124567234689"+ on obtient \verb+[8,5,8,11]+.
+\end{exo}
+\vspace*{-2ex}
+\begin{exo}
+    Écrire une fonction {\tt question3b} qui prend comme argument une chaîne de
+caractères composée de chiffres
+et qui renvoie une liste de tous ses chiffres divisibles par $2$
+auxquels on a ajouté $3$. Par
+exemple pour \verb+"272346"+ on obtient \verb+[5,5,7,9]+.
+\end{exo}
+\vspace*{-2ex}
+\begin{exo}
+    Écrire une fonction {\tt question3c} qui prend comme argument une chaîne de
+caractères composée de chiffres
+et qui renvoie une liste de tous ses chiffres divisibles par $3$
+auxquels on a ajouté $1$. Par
+exemple pour \verb+"124567234689"+ on obtient \verb+[7,4,7,10]+.
+\end{exo}
+\vspace*{-2ex}
+\begin{exo}
+    Écrire une fonction {\tt question3d} qui prend comme argument une chaîne de
+caractères composée de chiffres
+et qui renvoie une liste de tous ses chiffres divisibles par $2$
+auxquels on a soustrait $3$. Par
+exemple pour \verb+"272346"+ on obtient \verb+[-1,-1,1,3]+.
+\end{exo}
+\vspace*{-2ex}
+\begin{exo}
+    Écrire une fonction {\tt question3e} qui prend comme argument une chaîne de
+caractères composée de chiffres
+et qui renvoie une liste de tous ses chiffres divisibles par $3$
+auxquels on a soustrait $2$. Par
+exemple pour \verb+"0124567234689"+ on obtient \verb+[-2,4,1,4,7]+.
+\end{exo}
+\vspace*{-2ex}
+\begin{exo}
+    Écrire une fonction {\tt question3f} qui prend comme argument une chaîne de
+caractères composée de chiffres
+et qui renvoie une liste de tous ses chiffres divisibles par $4$
+auxquels on a soustrait $2$. Par
+exemple pour \verb+"0124567234689"+ on obtient \verb+[-2,2,2,6]+.
+\end{exo}
+%%endsubset
+\vspace*{-2ex}
+%%subset 1
+\begin{exo}
+    Écrire une fonction {\tt question4a} qui prend en argument une liste de listes d'entiers et qui renvoie une liste de toutes les listes
+de longueur inférieure ou égale à 2 où tous les éléments ont été multipliés par 2. Par exemple pour \verb+[[1,2],[3,4,5],[2,3]]+ on obtient \verb+[[2,4],[4,6]]+.
+\end{exo}
+\vspace*{-2ex}
+\begin{exo}
+    Écrire une fonction {\tt question4b} qui prend en argument une liste de listes d'entiers et qui renvoie une liste de toutes les listes
+de longueur inférieure ou égale à 2 où tous les éléments ont été multipliés par 3. Par exemple pour \verb+[[1,2],[3,4,5],[2,3]]+ on obtient \verb+[[3,6],[6,9]]+.
+\end{exo}
+\vspace*{-2ex}
+\begin{exo}
+    Écrire une fonction {\tt question4c} qui prend en argument une liste de listes d'entiers et qui renvoie une liste de toutes les listes
+de longueur supérieure ou égale à 3 où tous les éléments ont été multipliés par 2. Par exemple pour \verb+[[1,2,3],[2,3],[3,4,5]]+ on obtient \verb+[[2,4,6],[6,8,10]]+.
+\end{exo}
+\vspace*{-2ex}
+\begin{exo}
+    Écrire une fonction {\tt question4d} qui prend en argument une liste de listes d'entiers et qui renvoie une liste de toutes les listes
+de longueur supérieure ou égale à 3 où tous les éléments ont été multipliés par 3. Par exemple pour \verb+[[1,2,3],[2,3],[3,4,5]]+ on obtient \verb+[[3,6,9],[9,12,15]]+.
+\end{exo}
+\vspace*{-2ex}
+\begin{exo}
+    Écrire une fonction {\tt question4e} qui prend en argument une liste de listes d'entiers et qui renvoie une liste de toutes les listes
+de longueur inférieure ou égale à 3 où tous les éléments ont été multipliés par 3. Par exemple pour \verb+[[1,2],[2,3,4,5],[3,4,5]]+ on obtient \verb+[[3,6],[9,12,15]]+.
+\end{exo}
+\vspace*{-2ex}
+\begin{exo}
+    Écrire une fonction {\tt question4f} qui prend en argument une liste de listes d'entiers et qui renvoie une liste de toutes les listes
+de longueur inférieure ou égale à 3 où tous les éléments ont été multipliés par 2. Par exemple pour \verb+[[1,2],[2,3,4,5],[3,4,5]]+ on obtient \verb+[[2,4],[6,8,10]]+.
+\end{exo}
+%%endsubset
+\vspace*{-2ex}
+%%subset 1
+\begin{exo}
+    Écrire une fonction {\tt question5a} qui prend en argument le nom d'un fichier et qui retourne le nombre de fois où le fichier contient la lettre 'a' ou la
+lettre 'b'.
+Par exemple pour le fichier \verb+test5+ sur Moodle contenant: 
+\begin{verbatim} 
+aazefo ioaze fi bwbblariufffdddqqfff
+qfg  uiuuaaabbeecccd dedeee
+\end{verbatim} 
+\verb+question5a("test5")+ retourne \verb+12+.
+\end{exo}
+\vspace*{-2ex}
+\begin{exo}
+    Écrire une fonction {\tt question5b} qui prend en argument le nom d'un fichier et qui retourne le nombre de fois où le fichier contient la lettre 'c' ou la
+lettre 'd'.
+Par exemple pour le fichier \verb+test5+ sur Moodle contenant: 
+\begin{verbatim} 
+aazefo ioaze fi bwbblariufffdddqqfff
+qfg  uiuuaaabbeecccd dedeee
+\end{verbatim} 
+\verb+question5b("test5")+ retourne \verb+9+.
+\end{exo}
+\vspace*{-2ex}
+\begin{exo}
+    Écrire une fonction {\tt question5c} qui prend en argument le nom d'un fichier et qui retourne le nombre de fois où le fichier contient la lettre 'e' ou la
+lettre 'f'.
+Par exemple pour le fichier \verb+test5+ sur Moodle contenant: 
+\begin{verbatim} 
+aazefo ioaze fi bwbblariufffdddqqfff
+qfg  uiuuaaabbeecccd dedeee
+\end{verbatim} 
+\verb+question5c("test5")+ retourne \verb+17+.
+\end{exo}
+\vspace*{-2ex}
+\begin{exo}
+    Écrire une fonction {\tt question5d} qui prend en argument le nom d'un fichier et qui retourne le nombre de fois où le fichier contient la lettre 'd' ou la
+lettre 'a'.
+Par exemple pour le fichier \verb+test5+ sur Moodle contenant: 
+\begin{verbatim} 
+aazefo ioaze fi bwbblariufffdddqqfff
+qfg  uiuuaaabbeecccd dedeee
+\end{verbatim} 
+\verb+question5d("test5")+ retourne \verb+13+.
+\end{exo}
+\vspace*{-2ex}
+\begin{exo}
+    Écrire une fonction {\tt question5e} qui prend en argument le nom d'un fichier et qui retourne le nombre de fois où le fichier contient la lettre 'e' ou la
+lettre 'c'.
+Par exemple pour le fichier \verb+test5+ sur Moodle contenant: 
+\begin{verbatim} 
+aazefo ioaze fi bwbblariufffdddqqfff
+qfg  uiuuaaabbeecccd dedeee
+\end{verbatim} 
+\verb+question5e("test5")+ retourne \verb+11+.
+\end{exo}
+\vspace*{-2ex}
+\begin{exo}
+    Écrire une fonction {\tt question5f} qui prend en argument le nom d'un fichier et qui retourne le nombre de fois où le fichier contient la lettre 'c' ou la
+lettre 'f'.
+Par exemple pour le fichier \verb+test5+ sur Moodle contenant: 
+\begin{verbatim} 
+aazefo ioaze fi bwbblariufffdddqqfff
+qfg  uiuuaaabbeecccd dedeee
+\end{verbatim} 
+\verb+question5f("test5")+ retourne \verb+12+.
+\end{exo}
+%%endsubset
+\vspace*{-2ex}
+%%subset 1
+\begin{exo}
+    Écrire une fonction \verb+question6a+ qui prend en argument le nom d'un fichier
+et retourne un dictionnaire de mots où chaque clé est une lettre de
+l'alphabet et sa valeur correspondante la liste des mots du fichier commençant
+par cette clé. Le fichier considéré comportera des mots 
+sans lettre accentuée, avec un mot par ligne. Par exemple pour un fichier
+contenant:
+\begin{verbatim}
+hello
+hallo
+bonjour
+salut
+\end{verbatim}
+on obtient \verb+{'s': ['salut'], 'b': ['bonjour'], 'h': ['hello', 'hallo']}+\\
+Sur Moodle vous trouverez un fichier long \verb+motsquestion6a+ pour tester.
+\end{exo}
+\vspace*{-2ex}
+\begin{exo}
+    Écrire une fonction \verb+question6b+ qui prend en argument le nom d'un fichier
+et retourne un dictionnaire de mots où chaque clé est une lettre de
+l'alphabet et sa valeur correspondante la liste des mots du fichier commençant
+par cette clé. Le fichier considéré comportera des mots sans lettre accentuée, et les mots seront séparés par un espace sans aucun retour
+à la ligne.
+Par exemple, pour un fichier contenant
+\begin{verbatim}
+pierre penelope bonjour bazar truc
+\end{verbatim}
+on obtient \verb+{'t': ['truc'], 'b': ['bonjour', 'bazar'], 'p': ['pierre', 'penelope']}+\\
+Sur Moodle vous trouverez un fichier long \verb+motsquestion6b+ pour tester.
+\end{exo}
+\vspace*{-2ex}
+\begin{exo}
+    Écrire une fonction \verb+question6c+ qui prend en argument le nom d'un fichier
+et retourne un dictionnaire de mots où chaque clé est une lettre de
+l'alphabet et sa valeur correspondante l'ensemble des mots du fichier commençant
+par cette clé. Le fichier considéré comportera des mots 
+sans lettre accentuée, avec un mot par ligne. Par exemple pour un fichier
+contenant:
+\begin{verbatim}
+hello
+hallo
+bonjour
+salut
+\end{verbatim}
+on obtient \verb+{'b': {'bonjour'}, 's': {'salut'}, 'h': {'hallo', 'hello'}}+\\
+Sur Moodle vous trouverez un fichier long \verb+motsquestion6c+ pour tester.
+\end{exo}
+\vspace*{-2ex}
+\begin{exo}
+    Écrire une fonction \verb+question6d+ qui prend en argument le nom d'un fichier
+et retourne un dictionnaire de mots où chaque clé est une lettre de
+l'alphabet et sa valeur correspondante l'ensemble des mots du fichier commençant
+par cette clé. Le fichier considéré comportera des mots sans lettre accentuée, et les mots seront séparés par un espace sans aucun retour
+à la ligne.
+Par exemple, pour un fichier contenant
+\begin{verbatim}
+pierre penelope bonjour bazar truc
+\end{verbatim}
+on obtient \verb+{'p': {'pierre', 'penelope'}, 't': {'truc'}, 'b': {'bazar', 'bonjour'}}+\\
+Sur Moodle vous trouverez un fichier long \verb+motsquestion6d+ pour tester.
+\end{exo}
+%%endsubset
+\vspace*{-2ex}
+%%subset 1
+\begin{exo}
+    Écrire une fonction {\tt question7a}
+qui prend en argument une chaîne de caractères et qui renvoie
+la première suite consécutive de $3$ voyelles ('a', 'e', 'i', 'o', 'u' ou 'y')
+qui s'y trouvent ou \verb+None+
+s'il n'y en a pas.
+Par exemple pour \verb+"abebgeayuaieebbioaa"+ on obtient
+\verb+'eay'+. Utilisez les expressions régulières.
+\end{exo}
+\vspace*{-2ex}
+\begin{exo}
+    Écrire une fonction {\tt question7b}
+qui prend en argument une chaîne de caractères et qui renvoie
+la première suite consécutive de $4$ voyelles ('a', 'e', 'i', 'o', 'u' ou 'y')
+qui s'y trouvent ou \verb+None+
+s'il n'y en a pas.
+Par exemple pour \verb+"abebgeayuaieebbioaa"+ on obtient
+\verb+'eayu'+. Utilisez les expressions régulières.
+\end{exo}
+\vspace*{-2ex}
+\begin{exo}
+    Écrire une fonction {\tt question7c}
+qui prend en argument une chaîne de caractères et qui renvoie
+la première suite consécutive de $5$ voyelles ('a', 'e', 'i', 'o', 'u' ou 'y')
+qui s'y trouvent ou \verb+None+
+s'il n'y en a pas.
+Par exemple pour \verb+"abebgeayuaieebbioaa"+ on obtient
+\verb+'eayua'+. Utilisez les expressions régulières.
+\end{exo}
+\vspace*{-2ex}
+\begin{exo}
+    Écrire une fonction {\tt question7d}
+qui prend en argument une chaîne de caractères et qui renvoie
+la première suite consécutive de $6$ voyelles ('a', 'e', 'i', 'o', 'u' ou 'y')
+qui s'y trouvent ou \verb+None+
+s'il n'y en a pas.
+Par exemple pour \verb+"abebgeayuaieebbioaa"+ on obtient
+\verb+'eayuai'+. Utilisez les expressions régulières.
+\end{exo}
+%%endsubset
+\vspace*{-2ex}
+%%subset 1
+\begin{exo}
+    Écrire une fonction {\tt question8a} qui prend en argument un ensemble
+de chaînes de caractères et qui renvoie une liste de toutes les chaînes
+qui contiennent la {\bf même} suite de 2
+chiffres (entre 0 et 9) au moins 3 fois.
+Par exemple, pour \verb+{"1a24bbb24a24","00000","23032311230023"}+\\
+on obtient \verb+['1a24bbb24a24', '23032311230023']+.
+Utilisez les expressions régulières.
+\end{exo}
+\vspace*{-2ex}
+\begin{exo}
+    Écrire une fonction {\tt question8b} qui prend en argument un ensemble
+de chaînes de caractères et qui renvoie une liste de toutes les chaînes
+qui contiennent la {\bf même} suite de 3
+chiffres (entre 0 et 9) au moins 2 fois.
+Par exemple, pour \verb+{"1a24bbb24a24","00000","23032311230023","111111"}+
+on obtient \verb+['111111','23032311230023']+.
+Utilisez les expressions régulières.
+\end{exo}
+\vspace*{-2ex}
+\begin{exo}
+    Écrire une fonction {\tt question8c} qui prend en argument une liste
+de chaînes de caractères et qui renvoie un ensemble de toutes les chaînes
+qui contiennent la {\bf même} suite de 2
+chiffres (entre 0 et 9) au moins 3 fois.
+Par exemple, pour \verb+["1a24bbb24a24","00000","23032311230023"]+\\
+on obtient \verb+{'1a24bbb24a24', '23032311230023'}+.
+Utilisez les expressions régulières.
+\end{exo}
+\vspace*{-2ex}
+\begin{exo}
+    Écrire une fonction {\tt question8d} qui prend en argument une liste
+de chaînes de caractères et qui renvoie un ensemble de toutes les chaînes
+qui contiennent la {\bf même} suite de 3
+chiffres (entre 0 et 9) au moins 2 fois.
+Par exemple, pour \verb+["1a24bbb24a24","00000","23032311230023","111111"]+
+on obtient \verb+{'111111','23032311230023'}+.
+Utilisez les expressions régulières.
+\end{exo}
+%%endsubset
+\vspace*{-2ex}
+%%subset 1
+\begin{exo}
+    La RATP fournit des données sur la fréquentation annuelle des stations de son réseau. Le fichier CSV (sur Moodle: \verb+ratp.csv+) a le format suivant\\
+\verb+Réseau;Station;Trafic;Correspondance_1;Corr_2;Corr_3;Corr_4;Corr_5;Ville;Arr. pour Paris+\\
+Par exemple la première ligne du fichier\\
+\verb+Métro;SAINT-LAZARE;45309544;3;9;12;13;14;Paris;8+\\
+indique que le trafic annuel à la station Métro Saint-Lazare à Paris (accès aux lignes 3,9,12,13 et 14) dans le 8e arrondissement de Paris est de 45309544 passagers. S'il y a moins que $5$ lignes accessibles à une station les champs correspondants sont vides.
+
+Écrire une fonction {\tt question9a} qui prend en entrée un nom de fichier CSV
+du format donné ci-dessus
+et retourne la liste (sous forme de liste python) des lignes (chaînes
+de caractères) du fichier (sans le \verb+\n+)
+concernant les stations de {\bf Métro dans Paris}.
+\end{exo}
+\vspace*{-2ex}
+\begin{exo}
+    La RATP fournit des données sur la fréquentation annuelle des stations de son
+réseau. Le fichier CSV (sur Moodle: \verb+ratp.csv+) a le format suivant\\
+\verb+Réseau;Station;Trafic;Correspondance_1;Corr_2;Corr_3;Corr_4;Corr_5;Ville;Arr. pour Paris+\\
+Par exemple la première ligne du fichier\\
+\verb+Métro;SAINT-LAZARE;45309544;3;9;12;13;14;Paris;8+\\
+indique que le trafic annuel à la station Métro Saint-Lazare à Paris (accès aux lignes 3,9,12,13 et 14) dans le 8e arrondissement de Paris est de 45309544 passagers.
+S'il y a moins que $5$ lignes accessibles à une station les champs correspondants sont vides. Le réseau peut être aussi RER.
+
+Écrire une fonction {\tt question9b} qui prend en entrée un nom de fichier CSV
+du format donné ci-dessus
+et retourne la liste (sous forme de liste python) des lignes (chaînes
+de caractères) du fichier (sans le \verb+\n+)
+concernant les stations de {\bf RER dans Paris}.
+\end{exo}
+\vspace*{-2ex}
+\begin{exo}
+    La RATP fournit des données sur la fréquentation annuelle des stations de son réseau. Le fichier CSV (sur Moodle: \verb+ratp.csv+) a le format suivant\\
+\verb+Réseau;Station;Trafic;Correspondance_1;Corr_2;Corr_3;Corr_4;Corr_5;Ville;Arr. pour Paris+\\
+Par exemple la première ligne du fichier\\
+\verb+Métro;SAINT-LAZARE;45309544;3;9;12;13;14;Paris;8+\\
+indique que le trafic annuel à la station Saint-Lazare à Paris (accès aux lignes 3,9,12,13 et 14) dans le 8e arrondissement de Paris est de 45309544 passagers. S'il y a moins que $5$ lignes accessibles à une station les champs correspondants sont vides. 
+
+Écrire une fonction {\tt question9c} qui prend en entrée un nom de fichier CSV
+du format donné ci-dessus
+et retourne la liste (sous forme de liste python) des lignes (chaînes
+de caractères) du fichier (sans le \verb+\n+)
+concernant les stations de {\bf Métro à l'extérieur de Paris}.
+\end{exo}
+\vspace*{-2ex}
+\begin{exo}
+    La RATP fournit des données sur la fréquentation annuelle des stations de son
+réseau. Le fichier CSV (sur Moodle: \verb+ratp.csv+) a le format suivant\\
+\verb+Réseau;Station;Trafic;Correspondance_1;Corr_2;Corr_3;Corr_4;Corr_5;Ville;Arr. pour Paris+\\
+Par exemple la première ligne du fichier\\
+\verb+Métro;SAINT-LAZARE;45309544;3;9;12;13;14;Paris;8+\\
+indique que le trafic annuel à la station Saint-Lazare à Paris (accès aux lignes 3,9,12,13 et 14) dans le 8e arrondissement de Paris est de 45309544 passagers.
+S'il y a moins que $5$ lignes accessibles à une station les champs correspondants sont vides.  Le réseau peut être aussi RER.
+
+Écrire une fonction {\tt question9d} qui prend en entrée un nom de fichier CSV
+du format donné ci-dessus
+et retourne la liste (sous forme de liste python) des lignes (chaînes
+de caractères) du fichier (sans le \verb+\n+)
+concernant les stations de {\bf RER à l'extérieur de Paris}.
+\end{exo}
+%%endsubset
+\vspace*{-2ex}
+%%subset 1
+\begin{exo}
+    Écrire une fonction {\tt question10a} qui prend en entrée un nom de fichier CSV
+du format donné ci-dessus
+et qui renvoie une liste d'association (dictionnaire) dont les clefs sont
+des paires (Réseau,Station) et les valeurs leur fréquentation.
+La valeur doit être un entier.
+\end{exo}
+\vspace*{-2ex}
+\begin{exo}
+    Écrire une fonction {\tt question10b} qui prend en entrée un nom de fichier CSV
+du format donné ci-dessus
+et qui renvoie une liste d'association (dictionnaire) dont les clefs sont
+des paires (Station,Réseau) et les valeurs leur fréquentation.
+La valeur doit être un entier.
+\end{exo}
+%%endsubset
+\vspace*{-2ex}
+%%subset 1
+\begin{exo}
+    Écrire une fonction {\tt question11a} qui prend en entrée un nom de fichier CSV
+du format donné ci-dessus et qui renvoie un dictionnaire dont les clefs sont
+les lignes de Métro
+avec comme valeur la station la plus fréquentée sur cette ligne.
+\end{exo}
+\vspace*{-2ex}
+\begin{exo}
+    Écrire une fonction {\tt question11b} qui prend en entrée un nom de fichier CSV
+du format donné ci-dessus et qui renvoie un dictionnaire dont les clefs sont
+les lignes de Métro
+avec comme valeur la station la moins fréquentée sur cette ligne.
+\end{exo}
+%%endsubset
+\vspace*{-2ex}
+\end{document}
